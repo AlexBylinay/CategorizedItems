@@ -16,8 +16,8 @@ public class Launcher {
 
 		//
 
-		// category.check(category.getAll(connection.connectionForDatabaseCategcorizedItemstru()),
-		// category.toCategoryMap(connection.connectionForDatabaseCategcorizedItemstru()));
+		 category.check(category.getAll(connection.connectionForDatabaseCategcorizedItemstru()),
+		 category.toCategoryMap(connection.connectionForDatabaseCategcorizedItemstru()));
 
 		//category.toCategoryMap(connection.connectionForDatabaseCategcorizedItemstru());
 		//item.outputsToConsoleAllItensFromList(item.getAll(connection.connectionForDatabaseCategcorizedItemstru()));
@@ -27,6 +27,6 @@ public class Launcher {
 		 //(category.outputsToConsoleAllCategoryFromList(category.getAll(connection.connectionForDatabaseCategcorizedItemstru()))).
 		// category.size(category.outputsToConsoleAllCategoryFromList(category.getAll(connection.connectionForDatabaseCategcorizedItemstru())));
 
-		System.out.println ("manowar");
+
 	}
 }
