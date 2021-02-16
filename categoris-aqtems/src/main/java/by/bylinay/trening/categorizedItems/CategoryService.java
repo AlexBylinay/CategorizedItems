@@ -78,6 +78,7 @@ public class CategoryService {
 			int key = category.getId();
 			// System.out.println (key);
 			Category category2 = categorysforItem.get(key);
+					System.out.println (" manowarrr ");
 			System.out.printf(" %d.  %12s %2d. %s \n ", category2.getId(), category2.getName(), category2.getColor(),
 					category.getDate());
 		}
