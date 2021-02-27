@@ -5,45 +5,33 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ItemService {
+
 	static List<Item> getAll(Connection connection) throws SQLException, ClassNotFoundException {
+
 		List<Item> allItem = new ArrayList<Item>();
-		Category category = new CategoryImpl(0, null, 0, null);
-		Connector connection1 = new Connector();
-		CategoryService category1 = new CategoryService();
+
 		java.sql.Statement statement = connection.createStatement();
-		ResultSet resultSet = statement.executeQuery("SELECT  * FROM item ORDER BY id asc");
-		HashMap<Integer, Category> categorysforItem = new HashMap<Integer, Category>();
-		categorysforItem = category1.toCategoryMap(connection1.connectionForDatabaseCategcorizedItemstru());
-		while (resultSet.next()) {
-			int id = resultSet.getInt(1);
-			String name = resultSet.getString(2);
-			int catygoryId = resultSet.getInt(3);
-			Date date = resultSet.getDate(4);
-			category = categorysforItem.get(catygoryId);
-			Item itemm = new SimpleItem(id, name, catygoryId, date, category);
-			allItem.add(itemm);
+		ResultSet rs = statement.executeQuery("SELECT  * FROM item ORDER BY id asc");
+		while (rs.next()) {
 
-			// System.out.println (idCategory);
-			// System.out.println (category.getId());
-			// System.out.println (category.getName());
-
+			allItem.add(toItem(rs));
 		}
-		resultSet.close();
+		rs.close();
 		connection.close();
 		return allItem;
 	}
 
-	static void outputsToConsoleAllItensFromList(List<Item> allItem) {
-		for (Item item : allItem) {
-			Category category = item.getCategory();
-			System.out.printf(" %d.  %10s %6d. %12s  %10d.  %10s %6d. %12s \n ", item.getId(), item.getName(),
-					item.catygoryId(), item.getDate(), category.getId(), category.getName(), category.getColor(),
-					category.getDate());
-		}
+	private static Item toItem(ResultSet rs) throws SQLException {
+		int id = rs.getInt(1);
+		String name = rs.getString(2);
+		int catygoryId = rs.getInt(3);
+		Date date = rs.getDate(4);
+		Item item = new SimpleItem(id, name, catygoryId, date);
+
+		return item;
 
 	}
 
