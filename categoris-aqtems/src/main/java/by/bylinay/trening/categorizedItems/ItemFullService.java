@@ -1,6 +1,5 @@
 package by.bylinay.trening.categorizedItems;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,18 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ItemFullService {
+	//public static ConnectionAndStatement statement = new Statement();
 
-	static List<Item> getAllFull(Connection connection) throws SQLException, ClassNotFoundException {
+	static List<Item> getAllFull() throws SQLException, ClassNotFoundException {
+		ConnectorAndStatement statement = new ConnectorAndStatement();
 
 		List<Item> allItem = new ArrayList<Item>();
 
-		java.sql.Statement statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery("SELECT  * FROM item ORDER BY id asc");
+		ResultSet rs = statement.makeConnectionFndStatement().executeQuery("SELECT  * FROM item ORDER BY id asc");
 		while (rs.next()) {
 			allItem.add(toItem(rs));
 		}
 		rs.close();
-		connection.close();
+		statement.makeConnectionFndStatement().close();
 		return allItem;
 
 	}
@@ -37,10 +37,10 @@ public class ItemFullService {
 	}
 
 	public static Category getCategorysforItem(int key) throws SQLException, ClassNotFoundException {
-		GetCategorysForItem categoryMake = new GetCategorysForItem();
+		CategoryService category = new CategoryService();
 		Connector connection = new Connector();
-		HashMap<Integer, Category> categorysforItem = categoryMake
-				.toCategoryMap(connection.connectionForDatabaseCategcorizedItemstru());
+		HashMap<Integer, Category> categorysforItem = category
+				.toCategoryMap();
 		return categorysforItem.get(key);
 	}
 

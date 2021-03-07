@@ -12,42 +12,40 @@ import java.util.List;
 
 public class CategoryService {
 	static final String FORMAT_FOR_PRINT = " %d.  %12s %2d. %s \n ";
-
-	public static List<Category> getAll(Connection connection) throws SQLException {
+	
+	public static List<Category> getAll() throws SQLException, ClassNotFoundException {
 		List<Category> allCategory = new ArrayList<Category>();
-		java.sql.Statement statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery("SELECT  * FROM category ORDER BY id asc");
+		ConnectorAndStatement statement = new ConnectorAndStatement();
+		ResultSet rs = statement.makeConnectionFndStatement().executeQuery("SELECT  * FROM category ORDER BY id asc");
 		while (rs.next()) {
 			allCategory.add(toCategory(rs));
 		}
 		rs.close();
-		connection.close();
+		statement.makeConnectionFndStatement().close();
 		return allCategory;
 	}
 
-	private static Category toCategory (ResultSet rs) throws SQLException {
+	private static Category toCategory(ResultSet rs) throws SQLException {
 		int id = rs.getInt(1);
 		String name = rs.getString(2);
 		int color = rs.getInt(3);
 		Date date = rs.getDate(4);
 		return new CategoryImpl(id, name, color, date);
 	}
-	
-	
-	public static HashMap<Integer, Category> toCategoryMap (Connection connection) throws SQLException  {
-		 List<Category> allCategory = getAll (connection);
-		 HashMap<Integer, Category> categorysforItem = new HashMap<Integer, Category>();
-		 for (Category category : allCategory) {
-				int key = category.getId();
-					categorysforItem.put(key, category);
-	
-		 }
-	return categorysforItem;
-	}
-	
-	
 
-	public static List<String> outputsToConsoleAllCategoryFromList(List<Category> categorys) {
+	public static HashMap<Integer, Category> toCategoryMap()
+			throws SQLException, ClassNotFoundException {
+		List<Category> allCategory = getAll();
+		HashMap<Integer, Category> categorysforItem = new HashMap<Integer, Category>();
+		for (Category category : allCategory) {
+			int key = category.getId();
+			categorysforItem.put(key, category);
+
+		}
+		return categorysforItem;
+	}
+
+	/*public static List<String> outputsToConsoleAllCategoryFromList(List<Category> categorys) {
 		List<String> all = new ArrayList<String>();
 		String outpun = null;
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -62,11 +60,8 @@ public class CategoryService {
 
 	public static int size(List<String> all) throws ClassNotFoundException, SQLException {
 		Connector connection = new Connector();
-		return size(
-				outputsToConsoleAllCategoryFromList(getAll(connection.connectionForDatabaseCategcorizedItemstru())));
+		return size(outputsToConsoleAllCategoryFromList(getAll()));
 
-	}
-
-
+	}*/
 
 }
