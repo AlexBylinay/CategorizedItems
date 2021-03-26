@@ -8,7 +8,7 @@ public class ConnectorAndStatement {
 
 	public static java.sql.Statement makeConnectionFndStatement() throws SQLException, ClassNotFoundException {
 
-		Class.forName(DRIVER);
+		//Class.forName(DRIVER);
 		String url = "jdbc:mysql://localhost:3306/categorizedItemstru";
 		String user = "root";
 		String password = "kapli123";

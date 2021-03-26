@@ -6,12 +6,15 @@ import java.sql.SQLException;
 public class Launcher {
 	
 
-
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	private static DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
 	
-		printCatygory();
-		 printItem();
-		 printItemFull();
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		databaseInitializer.reinit();
+		
+	
+		//printCatygory();
+		// printItem();
+		// printItemFull();
 	}
 
 	private static void printCatygory() throws ClassNotFoundException, SQLException {
