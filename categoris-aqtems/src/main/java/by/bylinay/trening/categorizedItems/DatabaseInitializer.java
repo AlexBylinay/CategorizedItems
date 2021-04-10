@@ -16,7 +16,7 @@ public class DatabaseInitializer {
 	 public static void reinit() throws ClassNotFoundException,
      SQLException {
      
-     String aSQLScriptFilePath = "C:\\Users\\giga\\git\\CategorizedItems\\categoris-aqtems\\src\\main\\resources\\kanigoryTru.sql";
+     String aSQLScriptFilePath = "C:\\Users\\Lenovo\\git\\CategorizedItems\\categoris-aqtems\\src\\main\\resources\\kanigoryTru.sql";
   
      
      // Create MySql Connection
