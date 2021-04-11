@@ -11,19 +11,18 @@ import java.sql.Statement;
 
 
 
+
 public class DatabaseInitializer {
 	
 	 public static void reinit() throws ClassNotFoundException,
      SQLException {
      
-     String aSQLScriptFilePath = "C:\\Users\\Lenovo\\git\\CategorizedItems\\categoris-aqtems\\src\\main\\resources\\kanigoryTru.sql";
+     String aSQLScriptFilePath = "resources\\kanigoryTru.sql";
   
-     
-     // Create MySql Connection
-  //   Class.forName("com.mysql.jdbc.Driver");
      Connection con = DriverManager.getConnection(
          "jdbc:mysql://localhost:3306/raccoons", "root", "kapli123");
-     Statement stmt = null;
+     @SuppressWarnings("unused")
+	Statement stmt = null;
 
      try {
          // Initialize object for ScripRunner

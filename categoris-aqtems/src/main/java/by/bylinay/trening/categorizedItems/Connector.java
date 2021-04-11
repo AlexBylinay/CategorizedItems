@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class Connector {
 
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private  final String DRIVER = "com.mysql.jdbc.Driver";
 
-	public static Connection connectionForDatabaseCategcorizedItemstru()
+	public  Connection connectionForDatabaseCategcorizedItemstru()
 
 			throws SQLException, ClassNotFoundException {
 

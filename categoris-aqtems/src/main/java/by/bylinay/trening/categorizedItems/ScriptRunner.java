@@ -246,9 +246,7 @@ package by.bylinay.trening.categorizedItems;
 	  }
 
 	  private void checkWarnings(Statement statement) throws SQLException {
-	    if (!throwWarning) {
-	      return;
-	    }
+	    if (!throwWarning) {  }
 	    // In Oracle, CREATE PROCEDURE, FUNCTION, etc. returns warning
 	    // instead of throwing exception if there is compilation error.
 	    SQLWarning warning = statement.getWarnings();

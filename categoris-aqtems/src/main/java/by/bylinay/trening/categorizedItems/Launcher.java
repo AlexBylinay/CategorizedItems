@@ -17,7 +17,7 @@ public class Launcher {
 		// printItemFull();
 	}
 
-	private static void printCatygory() throws ClassNotFoundException, SQLException {
+	public static void printCatygory() throws ClassNotFoundException, SQLException {
 		 CategoryService allCategory = new CategoryService();
 		for (Category category : allCategory.getAll()) {
 			System.out.printf(" %d.  %12s %2d. %s \n ", category.getId(), category.getName(), category.getColor(),
@@ -26,7 +26,7 @@ public class Launcher {
 
 	}
 
-	private static void printItem() throws ClassNotFoundException, SQLException {
+	static  void printItem() throws ClassNotFoundException, SQLException {
 		ItemService Allitem = new ItemService();
 		for (Item item : Allitem.getAllFull()) {
 			System.out.printf(" %d.  %12s %2d. %s \n ", item.getId(), item.getName(), item.catygoryId(),
@@ -34,7 +34,7 @@ public class Launcher {
 		}
 	}
 
-	private static void printItemFull() throws ClassNotFoundException, SQLException {
+	public static void printItemFull() throws ClassNotFoundException, SQLException {
 		ItemService Allitem = new ItemService();
 		for (Item item : Allitem.getAllFull()) {
 			Category category = item.getCategory();
