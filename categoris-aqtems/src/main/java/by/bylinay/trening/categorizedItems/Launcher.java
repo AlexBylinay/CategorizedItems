@@ -1,6 +1,9 @@
 package by.bylinay.trening.categorizedItems;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
+
+import com.mysql.jdbc.Connection;
 
 
 public class Launcher {
@@ -8,10 +11,12 @@ public class Launcher {
 
 	private static DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		databaseInitializer.reinit();
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, FileNotFoundException {
+	//	databaseInitializer.reinit();
+		Connector c = new Connector();
+		Lkk g = new Lkk();
+		g.executeScript( (Connection) c.connectionForDatabaseCategcorizedItemstru());
 		
-	
 		//printCatygory();
 		// printItem();
 		// printItemFull();
