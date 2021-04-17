@@ -16,10 +16,9 @@ class DatabaseInitialozerTest {
 	@SuppressWarnings("static-access")
 	@Test
 	void test() throws SQLException, ClassNotFoundException, FileNotFoundException {
-		Connector c = new Connector();
-		Lkk g = new Lkk();
-		g.executeScript( (Connection) c.connectionForDatabaseCategcorizedItemstru());
-	//	databaseInitializer.reinit();
+		
+	
+	databaseInitializer.reinit();
 		statement.makeConnectionFndStatement().executeQuery("SELECT  * FROM category, item ");
 		//check.printCatygory();
 		check.printItemFull();

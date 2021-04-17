@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -21,15 +22,20 @@ import java.util.Scanner;
 import com.mysql.jdbc.Connection;
 
 public class Lkk {
-	 static void executeScript(Connection conn)//, //InputStream in//)
+	 static void executeScript( )//Connection conn)
+	 
 			    throws SQLException, FileNotFoundException
 			    
 			  {
+		 
+		 Connection conn = (Connection) DriverManager.getConnection(
+		         "jdbc:mysql://localhost:3306/raccoons", "root", "kapli123");
  
 		 
 		 FileInputStream in;
          in = new FileInputStream("resources\\\\kanigoryTru.sql");
-			    Scanner s = new Scanner(in);
+			    @SuppressWarnings("resource")
+				Scanner s = new Scanner(in);
 			    s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
 
 			    Statement st = null;

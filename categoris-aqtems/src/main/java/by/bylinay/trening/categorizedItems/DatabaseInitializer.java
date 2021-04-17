@@ -1,44 +1,46 @@
 package by.bylinay.trening.categorizedItems;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.Reader;
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
-
-
-
+import java.util.Scanner;
 
 public class DatabaseInitializer {
-	
-	 public static void reinit() throws ClassNotFoundException,
-     SQLException {
-     
-     String aSQLScriptFilePath = "resources\\kanigoryTru.sql";
-  
-     Connection con = DriverManager.getConnection(
-         "jdbc:mysql://localhost:3306/raccoons", "root", "kapli123");
-     @SuppressWarnings("unused")
-	Statement stmt = null;
 
-     try {
-         // Initialize object for ScripRunner
-         ScriptRunner sr = new ScriptRunner(con);
+	public static void reinit() throws SQLException, FileNotFoundException
 
-         // Give the input file to Reader
-         Reader reader = new BufferedReader(
-                            new FileReader(aSQLScriptFilePath));
+	{
 
-         // Exctute script
-         sr.runScript(reader);
+		Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/raccoons", "root",
+				"kapli123");
 
-     } catch (Exception e) {
-         System.err.println("Failed to Execute" + aSQLScriptFilePath
-                 + " The error is " + e.getMessage());
-     }
- }
+		FileInputStream in;
+		in = new FileInputStream("resources\\kanigoryTru.sql");
+		@SuppressWarnings("resource")
+		Scanner s = new Scanner(in);
+		s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
 
+		Statement st = null;
+
+		try {
+			st = conn.createStatement();
+
+			while (s.hasNext()) {
+				String line = s.next().trim();
+
+				if (!line.isEmpty())
+					st.execute(line);
+			}
+		} finally {
+			if (st != null)
+				st.close();
+		}
+
+		System.out.println("done");
+	}
 }
