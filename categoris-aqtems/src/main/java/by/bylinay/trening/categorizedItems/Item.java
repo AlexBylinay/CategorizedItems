@@ -8,7 +8,7 @@ public interface Item {
 
 	public String getName();
 
-	public int catygoryId();
+	public int getcatygoryId();
 
 	public Date getDate();
 

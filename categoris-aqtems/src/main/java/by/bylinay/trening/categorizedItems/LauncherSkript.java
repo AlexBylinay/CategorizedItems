@@ -2,16 +2,23 @@ package by.bylinay.trening.categorizedItems;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class DatabaseInitializer {
+import com.mysql.jdbc.Connection;
 
-	public static void reinit() throws SQLException, FileNotFoundException
+public class LauncherSkript {
+	
+	 public static void main(String[] args) throws FileNotFoundException, SQLException {
+     	executeScript();
+     	
+	 }
+
+	static void executeScript()// Connection conn)
+
+			throws SQLException, FileNotFoundException
 
 	{
 
@@ -19,7 +26,7 @@ public class DatabaseInitializer {
 				"kapli123");
 
 		FileInputStream in;
-		in = new FileInputStream("resources\\kanigoryTru.sql");
+		in = new FileInputStream("resources\\\\kanigory.sql");
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(in);
 		s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
@@ -40,6 +47,6 @@ public class DatabaseInitializer {
 				st.close();
 		}
 
-		System.out.println("done create");
+		System.out.println("done");
 	}
 }

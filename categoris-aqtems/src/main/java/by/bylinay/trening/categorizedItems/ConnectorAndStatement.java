@@ -4,11 +4,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectorAndStatement {
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
 
 	public static java.sql.Statement makeConnectionFndStatement() throws SQLException, ClassNotFoundException {
 
-		//Class.forName(DRIVER);
+		// Class.forName(DRIVER);
 		String url = "jdbc:mysql://localhost:3306/categorizedItemstru";
 		String user = "root";
 		String password = "kapli123";
@@ -19,4 +18,3 @@ public class ConnectorAndStatement {
 	}
 
 }
-

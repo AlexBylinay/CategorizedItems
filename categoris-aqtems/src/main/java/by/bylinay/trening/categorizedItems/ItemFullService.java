@@ -8,19 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ItemFullService {
-	//public static ConnectionAndStatement statement = new Statement();
+	// public static ConnectionAndStatement statement = new Statement();
 
 	static List<Item> getAllFull() throws SQLException, ClassNotFoundException {
-		ConnectorAndStatement statement = new ConnectorAndStatement();
 
 		List<Item> allItem = new ArrayList<Item>();
 
-		ResultSet rs = statement.makeConnectionFndStatement().executeQuery("SELECT  * FROM item ORDER BY id asc");
+		ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement()
+				.executeQuery("SELECT  * FROM item ORDER BY id asc");
 		while (rs.next()) {
 			allItem.add(toItem(rs));
 		}
 		rs.close();
-		statement.makeConnectionFndStatement().close();
+		ConnectorAndStatement.makeConnectionFndStatement().close();
 		return allItem;
 
 	}
@@ -37,10 +37,7 @@ public class ItemFullService {
 	}
 
 	public static Category getCategorysforItem(int key) throws SQLException, ClassNotFoundException {
-		CategoryService category = new CategoryService();
-		Connector connection = new Connector();
-		HashMap<Integer, Category> categorysforItem = category
-				.toCategoryMap();
+		HashMap<Integer, Category> categorysforItem = CategoryService.toCategoryMap();
 		return categorysforItem.get(key);
 	}
 

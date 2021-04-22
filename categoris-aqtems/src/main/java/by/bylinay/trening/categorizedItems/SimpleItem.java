@@ -30,7 +30,7 @@ public class SimpleItem implements Item {
 		return name;
 	}
 
-	public int catygoryId() {
+	public int getcatygoryId() {
 		return categoryId;
 	}
 

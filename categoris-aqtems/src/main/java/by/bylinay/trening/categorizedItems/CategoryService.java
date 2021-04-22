@@ -1,11 +1,9 @@
 package by.bylinay.trening.categorizedItems;
 
-import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,13 +13,12 @@ public class CategoryService {
 	
 	public static List<Category> getAll() throws SQLException, ClassNotFoundException {
 		List<Category> allCategory = new ArrayList<Category>();
-		ConnectorAndStatement statement = new ConnectorAndStatement();
-		ResultSet rs = statement.makeConnectionFndStatement().executeQuery("SELECT  * FROM category ORDER BY id asc");
+		ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery("SELECT  * FROM category ORDER BY id asc");
 		while (rs.next()) {
 			allCategory.add(toCategory(rs));
 		}
 		rs.close();
-		statement.makeConnectionFndStatement().close();
+		ConnectorAndStatement.makeConnectionFndStatement().close();
 		return allCategory;
 	}
 
@@ -44,24 +41,5 @@ public class CategoryService {
 		}
 		return categorysforItem;
 	}
-
-	/*public static List<String> outputsToConsoleAllCategoryFromList(List<Category> categorys) {
-		List<String> all = new ArrayList<String>();
-		String outpun = null;
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		for (Category category : categorys) {
-
-			outpun = Integer.toString(category.getId()) + category.getName() + Integer.toString(category.getColor())
-					+ df.format(category.getDate());
-			all.add(outpun);
-		}
-		return all;
-	}
-
-	public static int size(List<String> all) throws ClassNotFoundException, SQLException {
-		Connector connection = new Connector();
-		return size(outputsToConsoleAllCategoryFromList(getAll()));
-
-	}*/
 
 }
