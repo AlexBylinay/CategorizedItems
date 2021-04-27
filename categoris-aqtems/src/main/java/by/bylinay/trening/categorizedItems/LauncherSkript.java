@@ -26,7 +26,7 @@ public class LauncherSkript {
 				"kapli123");
 
 		FileInputStream in;
-		in = new FileInputStream("resources\\\\kanigory.sql");
+		in = new FileInputStream("resources\\kanigory.sql");
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(in);
 		s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
@@ -40,7 +40,7 @@ public class LauncherSkript {
 				String line = s.next().trim();
 
 				if (!line.isEmpty())
-					st.execute(line);
+					st.executeUpdate(line);
 			}
 		} finally {
 			if (st != null)
