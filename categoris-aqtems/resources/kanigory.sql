@@ -10,8 +10,3 @@ color INT NOT NULL,
 date_ DATE NOT NULL
 
 );
-
-INSERT INTO category
-( name_, color, date_) 
- VALUES 
-('cat',7,'2021-04-22'),('bear',9,'2021-04-22'),('raccoon',4,'2021-04-22'),('leshii',4,'2021-04-22'),('giraffe',5,'2021-04-22'),('panda',8,'2021-04-22'),('tiger',2,'2021-04-22');
