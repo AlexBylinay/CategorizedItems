@@ -26,7 +26,7 @@ public class CategoryService {
 		int id = rs.getInt(1);
 		String name = rs.getString(2);
 		int color = rs.getInt(3);
-		Date date = rs.getDate(4);
+		String date = rs.getString(4);
 		return new CategoryImpl(id, name, color, date);
 	}
 

@@ -10,7 +10,7 @@ public interface Item {
 
 	public int getcatygoryId();
 
-	public Date getDate();
+	public String getDate();
 
 	public Category getCategory();
 

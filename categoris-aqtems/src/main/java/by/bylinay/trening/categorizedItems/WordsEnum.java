@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum WordsEnum {
-	MANOWAR("manowar",1), METAL("metal",2), WARRIOR("warior",3), VICTORY("victory",4), VALHALLA("valhalla",5), ODIN("odin",6), SWORD("sword",7);
+	MANOWAR("Manowar",1), METAL("metal",2), WARRIOR("warior",3), VICTORY("victory",4), VALHALLA("valhalla",5), ODIN("odin",6), SWORD("sword",7);
 	public String title;
 	public int number;
 	WordsEnum (String title, int number){

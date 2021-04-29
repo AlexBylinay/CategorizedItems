@@ -1,5 +1,6 @@
 package by.bylinay.trening.categorizedItems;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public interface Category {
@@ -9,6 +10,6 @@ public interface Category {
 
 	public int getColor();
 
-	public Date  getDate();
+	public String  getDate();
 
 }

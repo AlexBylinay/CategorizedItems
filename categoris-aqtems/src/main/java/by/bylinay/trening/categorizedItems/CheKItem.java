@@ -27,19 +27,19 @@ public class CheKItem {
 			int id = rs.getInt(1);
 			String name = rs.getString(2);
 			int catygoryId = rs.getInt(3);
-			Date date = rs.getDate(4);
+			String date = rs.getString(4);
 			
 			/*
 			 * int id2 = resultSet.getInt(5); String name2 = resultSet.getString(6); String
 			 * category = resultSet.getString(7); String date2 = resultSet.getString(8);
 			 */
-			Category cateitemgory = new CategoryImpl(id, name, catygoryId, date);
+			Item item = new SimpleItem (id, name, catygoryId, date );
 
 			// System.out.printf( " %d. %7s %2d. -%s %14d. %s %-10s. %s. \n ", id, name,
 			// color, date, id2, name2, category, date2 );
-			System.out.println(cateitemgory.getId());
-			System.out.println(cateitemgory.getName());
-
+			System.out.println(item.getId());
+			System.out.println(item.getName());
+			
 		}
 		rs.close();
 		connection.close();

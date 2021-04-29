@@ -23,7 +23,7 @@ public class ItemService {
 			int id = rs.getInt(1);
 			String name = rs.getString(2);
 			int catygoryId = rs.getInt(3);
-			Date date = rs.getDate(4);
+			String date = rs.getString(4);
 			Item item = new SimpleItem(id, name, catygoryId, date);
 			allItem.add(item);
 		}
@@ -39,7 +39,7 @@ public class ItemService {
 			int id = rs.getInt(1);
 			String name = rs.getString(2);
 			int catygoryId = rs.getInt(3);
-			Date date = rs.getDate(4);
+			String date = rs.getString(4);
 			
 			Category category = getCategorysforItem(catygoryId);
 			Item item = new SimpleItem(id, name, catygoryId, date, category);
