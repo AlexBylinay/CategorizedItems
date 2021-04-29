@@ -1,0 +1,10 @@
+	public static void makeCatygory(String name, int color ) throws ClassNotFoundException, SQLException  {
+		 CategoryNames.put(name, color);
+		for (Map.Entry<String, Integer> entry: CategoryNames.entrySet())
+		{
+		Category catrgory  = new CategoryImpl (entry.getKey(), color);
+			addCatygory(catrgory);
+	
+		}
+	}
+	
