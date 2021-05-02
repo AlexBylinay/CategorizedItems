@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -17,30 +19,40 @@ import com.mysql.jdbc.PreparedStatement;
 public class RanSkript {
 	
 static String billetCatygory = "INSERT INTO category ( name_, color, date_) VALUES";
+static String chekCategory = "SELECT name_ FROM category WHERE name_ = ";
+static String chekItem = "SELECT name_ FROM item WHERE name_ = ";
 static String billetItem = "INSERT INTO item ( name_, category_id, date_) VALUES";
-static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 static String billit = "USE categoriz; ";
 static String billitItem = "USE item; ";
- static Map <String, Integer> CategoryNames = new HashMap<String, Integer>();
+ private static Map <String, Integer> CategoryNames = new HashMap<String, Integer>();
  static Map <String, Integer> NameIdCategory = new HashMap<String, Integer>();
-
 static Map <Integer, Category> idsCategory = new HashMap <Integer, Category>();
+static List<Category> allCategorys = new ArrayList<Category>();
 
 
 
 	public static  String  skriptForCategory( Category catrgory) {
-		return ( billetCatygory + "("+ "'" + catrgory.getName() + "'" + "," + catrgory.getColor() + ","  + "'" + (LocalDate.now().format(formatter))+ "'"  + ")" + ";");
+		return ( billetCatygory + "("+ "'" + catrgory.getName() + "'" + "," + catrgory.getColor() + ","  + "'" + (catrgory.getDate())+ "'"  + ")" + ";");
 	}
 	public static  String  skriptForItem(Item item, Category catrgory) {
-		return ( billetItem + "("+ "'" + item.getName() + "'" + "," + catrgory.getId() + ","  + "'" + (LocalDate.now().format(formatter))+ "'"  + ")" + ";");
+		return ( billetItem + "("+ "'" + item.getName() + "'" + "," + catrgory.getId() + ","  + "'" + (item.getDate())+ "'"  + ")" + ";");
 	}
 	public static  String  skriptForItemWhithId(Item item, int catrgoryId) {
-		return ( billetItem + "("+ "'" + item.getName() + "'" + "," + catrgoryId + ","  + "'" + (LocalDate.now().format(formatter))+ "'"  + ")" + ";");
+		return ( billetItem + "("+ "'" + item.getName() + "'" + "," + catrgoryId + ","  + "'" + (item.getDate())+ "'"  + ")" + ";");
+	}
+	
+	public static  String  skriptForChekCategory(String name) {
+		return ( chekCategory +"'"+ ( name +"'" + ";"));
+	}
+	
+	
+	
+	public static  String  skriptForChekItem(String name) {
+		return ( chekItem +"'"+ ( name +"'" + ";"));
 	}
 	
 	
 	public static void addCatygory(Category catrgory) throws ClassNotFoundException, SQLException {
-		//ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForCatygory(name, colorCod));
         PreparedStatement ps = (PreparedStatement) Connector.connectionForDatabaseCategcorizedItemstru().prepareStatement((skriptForCategory(catrgory)), Statement.RETURN_GENERATED_KEYS);
 		ps.executeUpdate();
 
@@ -54,50 +66,124 @@ static Map <Integer, Category> idsCategory = new HashMap <Integer, Category>();
 	}
 	
 	public static void addItem(Item item, Category catrgory) throws ClassNotFoundException, SQLException {
-		//ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(billitItem);
+	
 		ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForItem(item, catrgory));
 	}
-	
-	public static void addItemItemWhithId(Item item, int catrgoryId) throws ClassNotFoundException, SQLException {
-		//ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(billitItem);
-		ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForItemWhithId(item, catrgoryId));
+
+	public static void addItemItemWhithId(Item item) throws ClassNotFoundException, SQLException {
+		
+		ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForItemWhithId(item, item.getcatygoryId()));
 	}
 	
-	public static void makeCatygory (String name, int color ) throws ClassNotFoundException, SQLException  {
-		 CategoryNames.put(name, color);
+	public static String chekCategory(String name) throws ClassNotFoundException, SQLException {	
+     ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery( skriptForChekCategory( name));
+     String nameQuery = null;
+     while (rs.next()) {
+    	 nameQuery = rs.getString(1);
+			
+	}
+		return nameQuery;
+	}
+	
+	
+	public static String chekItem(String name) throws ClassNotFoundException, SQLException {	
+	     ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery( skriptForChekItem( name));
+	     String nameQuery = null;
+	     while (rs.next()) {
+	    	 nameQuery = rs.getString(1);
+				
+		}
+			return nameQuery;
+		}
+	
+	
+	
+	
+public static void chekBe( String nime) throws ClassNotFoundException, SQLException {
+		
+		//ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForItemWhithId(item, item.getcatygoryId()));
+	}
+	
+	
+	
+	public static void makeCatygory (String name, int color, int count ) throws ClassNotFoundException, SQLException  {
+	 String originalName = name;
+	if(chekCategory(name) != null)
+	{
+		System.out.println("This Category name already exists");
+		}
+	else {	
+		for (int i = 0; i < count; i++) {
+			if (i ==0) {
+				
 		Category catrgory  = new CategoryImpl (name, color);
 			addCatygory(catrgory);
+			}
+			else {	
+			name = originalName + String.valueOf(i+1); 
+			if( chekCategory(name) != null) {
+				System.out.println("This Category name already exists");}
+			else {
+		Category catrgory  = new CategoryImpl (name, color);
+			addCatygory(catrgory);
+			
+			}
 	}
+		}
+	}}
+	public static void makeItem (String name, int count) throws ClassNotFoundException, SQLException  {
+		String originalName = name;
+		if(chekItem(name) != null)
+		{
+			System.out.println("This Item name already exists");
+			}
+		else {	
+		 List<Integer> values = new ArrayList<Integer>(NameIdCategory.values());
 	
-	public static void makeItem (String name,  String nameCategory ) throws ClassNotFoundException, SQLException  {
+			if (NameIdCategory.size() == 0) {
+				System.out.println("Categorys didn't create");
+			}
+			else {	
+		 
+		 
+		if (NameIdCategory.size() < count) {
+			System.out.println("This Item name already exists");
+		}
+		else {	
+			
+		for (int i = 0; i < count; i++) {
+			if (i ==0) {name = originalName; 	
+	 		Item item  = new SimpleItem (name, values.get(i));
+			addItemItemWhithId(item);
+			}
+			else {	
+				name = originalName + String.valueOf(i+1);
+				if( chekItem(name) != null) {
+					System.out.println("Error enter Item name");}
+				else {
+		 		
+				
+ 		Item item  = new SimpleItem (name, values.get(i));
+		addItemItemWhithId(item);
+	
+		}
 		
-		Item item  = new SimpleItem (name, NameIdCategory.get(nameCategory));
-		addItemItemWhithId(item, NameIdCategory.get(nameCategory));
+		}}
+			}
+		}}
 	}
-	
 	public static void createCatygory(String name, int color, int volume ) throws ClassNotFoundException, SQLException {
-		
 		Category catrgory  = new CategoryImpl (name, color);
 		for (int i = 0; i < volume; i++) {
 			addCatygory(catrgory);
+			
 		}
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, SQLException, ClassNotFoundException {
-		/*Category catrgory1  = new CategoryImpl ("raccoon", 5);
-		Category catrgory2  = new CategoryImpl ("geraff", 1);
-		Item item1 = new SimpleItem ("Manowar", 3, catrgory1);
-		Item item2 = new SimpleItem ("warior", 6,catrgory2 );
-		createCatygory(catrgory1);
-		createCatygory(catrgory2);
-		createItem(item1,catrgory1);
-		createItem(item2, catrgory1 );	*/
-		//("raccoon", 1, 3);
-		//makeCatygory ("cat", 2);
-		//makeCatygory ("cat", 2);
-		makeCatygory ("cakt2", 2);
-		makeItem("jkjk", "cakt2");
-		System.out.println(CategoryNames.size());
+		makeCatygory ("hhmmxcccm", 2, 4);
+		makeItem("gnhgvvvmjg", 4);
+		
 		
 	}
 }

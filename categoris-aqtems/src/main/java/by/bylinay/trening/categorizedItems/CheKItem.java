@@ -37,9 +37,10 @@ public class CheKItem {
 
 			// System.out.printf( " %d. %7s %2d. -%s %14d. %s %-10s. %s. \n ", id, name,
 			// color, date, id2, name2, category, date2 );
-			System.out.println(item.getId());
-			System.out.println(item.getName());
 			
+			System.out.println(item.getName());
+			System.out.println(item.getId());
+			System.out.println(item.getcatygoryId());
 		}
 		rs.close();
 		connection.close();
