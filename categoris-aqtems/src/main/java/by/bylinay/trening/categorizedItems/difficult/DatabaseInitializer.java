@@ -135,18 +135,18 @@ public class DatabaseInitializer {
 
 	public  void makeCatygory(String name, int color, int count) throws  SQLException {
 		String originalName = name;
-		if (chekAutputCategory(name) != null) {
-			System.out.println("This Category name already exists");
-		} else {
+		//if (chekAutputCategory(name) != null) {
+		//	System.out.println("This Category name already exists");
+		//} else {
 			for (int i = 0; i < count; i++) {
-				if (i == 0) {
+				//if (i == 0) {
 
-					Category catrgory = new CategoryImpl(name, color);
+					//Category catrgory = new CategoryImpl(name, color);
 					// allCategorys.add(catrgory);
-					addCatygory(catrgory);
+					//addCatygory(catrgory);
 
-				} else {
-					name = originalName + String.valueOf(toNum(i));
+			//	} else {
+					name = originalName +  (toNum(i));
 					if (chekAutputCategory(name) != null) {
 						System.out.println("This Category name already exists");
 					} else {
@@ -157,8 +157,8 @@ public class DatabaseInitializer {
 					}
 				}
 			}
-		}
-	}
+	//	}
+	//}
 
 	public  void makeItem(String name, int count) throws  SQLException  {
 		String originalName = name;
@@ -181,7 +181,7 @@ public class DatabaseInitializer {
 							// Item item = new SimpleItem(name, allCategorys.get(i).getId());
 							addItemtemWhithId(item);
 						} else {
-							name = originalName + String.valueOf(toNum(i));
+							name = originalName + (i);
 							if (chekAutputItem(name) != null) {
 								System.out.println("Error enter Item name");
 							} else {
@@ -216,10 +216,10 @@ public class DatabaseInitializer {
 		reinit();
 		DatabaseInitializer hh = new DatabaseInitializer();
 		hh.makeCatygory("raccoon", 2, 5);
-		hh.makeCatygory("cat", 2, 5);
-		hh.makeCatygory("giraff", 2, 5);
+		//hh.makeCatygory("cat", 2, 5);
+		//hh.makeCatygory("giraff", 2, 5);
 
-		hh.makeItem("bbb", 15);
+		//hh.makeItem("bbb", 15);
 		// RanSkript.getCauntCategoty ();
 		// System.out.println(RanSkript.getIdCategory("raccoon2"));
 		// System.out.println(RanSkript.getIdItem("bbb7"));
