@@ -1,7 +1,7 @@
 package by.bylinay.trening.categorizedItems;
 
-import java.time.LocalDate;
-import java.util.Date;
+
+
 
 public interface Category {
 	public int getId();

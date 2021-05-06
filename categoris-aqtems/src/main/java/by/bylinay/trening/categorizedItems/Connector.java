@@ -6,13 +6,10 @@ import java.sql.SQLException;
 
 public class Connector {
 
-	private  final static String DRIVER = "com.mysql.jdbc.Driver";
-
 	public static  Connection connectionForDatabaseCategcorizedItemstru()
 
-			throws SQLException, ClassNotFoundException {
+			throws SQLException {
 
-		Class.forName(DRIVER);
 		String url = "jdbc:mysql://localhost:3306/categorizedItemstru";
 		String user = "root";
 		String password = "kapli123";

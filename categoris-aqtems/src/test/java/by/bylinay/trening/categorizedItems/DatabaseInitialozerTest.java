@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
+import by.bylinay.trening.categorizedItems.difficult.DatabaseInitializer;
+import by.bylinay.trening.categorizedItems.difficult.GiverTimeOfCreate;
+
 class DatabaseInitialozerTest {
 	@Test
 

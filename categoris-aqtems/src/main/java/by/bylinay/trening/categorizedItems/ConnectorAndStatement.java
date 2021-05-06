@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 public class ConnectorAndStatement {
 
-	public static java.sql.Statement makeConnectionFndStatement() throws SQLException, ClassNotFoundException {
+	public static java.sql.Statement makeConnectionFndStatement() throws SQLException {
 
-		// Class.forName(DRIVER);
+	
 		String url = "jdbc:mysql://localhost:3306/categorizedItemstru";
 		String user = "root";
 		String password = "kapli123";

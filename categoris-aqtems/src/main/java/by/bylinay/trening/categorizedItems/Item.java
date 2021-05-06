@@ -1,6 +1,6 @@
 package by.bylinay.trening.categorizedItems;
 
-import java.util.Date;
+
 
 public interface Item {
 

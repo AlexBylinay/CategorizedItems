@@ -1,11 +1,14 @@
-package by.bylinay.trening.categorizedItems;
+package by.bylinay.trening.categorizedItems.difficult;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+
 
 import com.mysql.jdbc.Statement;
+
+import by.bylinay.trening.categorizedItems.Item;
+import by.bylinay.trening.categorizedItems.SimpleItem;
 
 public class CheKItem {
 

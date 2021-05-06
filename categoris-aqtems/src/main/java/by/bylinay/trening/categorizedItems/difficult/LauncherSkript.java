@@ -1,4 +1,4 @@
-package by.bylinay.trening.categorizedItems;
+package by.bylinay.trening.categorizedItems.difficult;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

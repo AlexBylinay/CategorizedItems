@@ -1,4 +1,4 @@
-package by.bylinay.trening.categorizedItems;
+package by.bylinay.trening.categorizedItems.dontuse;
 
 public class Temporary {
 	public static void main(String[] args) {

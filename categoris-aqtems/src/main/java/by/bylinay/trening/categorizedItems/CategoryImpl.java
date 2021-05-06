@@ -1,9 +1,5 @@
 package by.bylinay.trening.categorizedItems;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 
 public class CategoryImpl implements Category {
 	private int id;

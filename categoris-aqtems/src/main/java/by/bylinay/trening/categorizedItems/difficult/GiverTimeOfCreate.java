@@ -1,4 +1,4 @@
-package by.bylinay.trening.categorizedItems;
+package by.bylinay.trening.categorizedItems.difficult;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;

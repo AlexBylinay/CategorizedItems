@@ -1,4 +1,4 @@
-package by.bylinay.trening.categorizedItems;
+package by.bylinay.trening.categorizedItems.dontuse;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +18,7 @@ public class ScriptCollector {
     
     // INSERT INTO category (id, name_, color, date_)  VALUES 
 	//( 'cat',  2, '2007-10-23'),
-    int limit = AnimalsEnum.getAnimals().size();
+    //int limit = AnimalsEnum.getAnimals().size();
     LocalDate date = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     String text = date.format(formatter);
@@ -34,7 +34,7 @@ public class ScriptCollector {
 	    
 	    // INSERT INTO category (id, name_, color, date_)  VALUES 
 		//( 'cat',  2, '2007-10-23'),
-	    int limit = AnimalsEnum.getAnimals().size();
+	   // int limit = AnimalsEnum.getAnimals().size();
 	    LocalDate date = LocalDate.now();
 	    
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

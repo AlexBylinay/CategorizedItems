@@ -3,7 +3,7 @@ package by.bylinay.trening.categorizedItems;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+
 
 import com.mysql.jdbc.Statement;
 

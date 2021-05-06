@@ -1,4 +1,4 @@
-package by.bylinay.trening.categorizedItems;
+package by.bylinay.trening.categorizedItems.dontuse;
 
 import java.util.ArrayList;
 import java.util.List;

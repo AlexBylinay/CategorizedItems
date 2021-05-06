@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class Launcher {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, FileNotFoundException {
-	DatabaseInitializer.reinit();
+	
 
 		printCatygory();
 		System.out.println("|||||||||||||");
