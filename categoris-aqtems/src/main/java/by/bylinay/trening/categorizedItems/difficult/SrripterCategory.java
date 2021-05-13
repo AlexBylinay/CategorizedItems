@@ -15,15 +15,14 @@ import by.bylinay.trening.categorizedItems.CategoryImpl;
 import by.bylinay.trening.categorizedItems.Connector;
 import by.bylinay.trening.categorizedItems.ConnectorAndStatement;
 
-
 public class SrripterCategory {
 
-	private  String billetCatygory = "INSERT INTO category ( name_, color, date_) VALUES";
-	private  String chekCategory = "SELECT name_ FROM category WHERE name_ = ";
+	private String billetCatygory = "INSERT INTO category ( name_, color, date_) VALUES";
+	private String chekCategory = "SELECT name_ FROM category WHERE name_ = ";
 	private String delete = "DELETE FROM CATEGORY WHERE name_ = ";
-			
+
 //	private Map<String, Integer> NameIdCategory = new HashMap<String, Integer>();
-	// private  List<Category> allCategorys = new ArrayList<Category>();
+	// private List<Category> allCategorys = new ArrayList<Category>();
 
 	public static void reinit() throws SQLException, FileNotFoundException {
 		FileInputStream in;
@@ -51,46 +50,40 @@ public class SrripterCategory {
 		System.out.println("done create");
 	}
 
-	private  String skriptForCategory(Category catrgory) {
+	private String skriptForCategory(Category catrgory) {
 		return (billetCatygory + "(" + "'" + catrgory.getName() + "'" + "," + catrgory.getColor() + "," + "'"
 				+ (catrgory.getDate()) + "'" + ")" + ";" + ";");
 	}
 
-	
-
-	private  String skriptForChekCategory(String name) {
+	private String skriptForChekCategory(String name) {
 		return (chekCategory + "'" + (name + "'" + ";"));
 	}
 
+	private String skriptForDeleteCategory(String name) {
 
-	private  String skriptForDeleteCategory(String name) {
-		
 		return (delete + "'" + (name + "'" + ";"));
 	}
-	
-	
-	private void addCatygory2(Category catrgory) throws SQLException {
-		ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForCategory(catrgory)+ "jnjn");
-	
+
+	private void addCategoryWithMistake(Category catrgory) throws SQLException {
+		ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForCategory(catrgory) + "jnjn");
+
 	}
-	
-	
-	private int addCatygory(Category catrgory) throws SQLException {
+
+	private int addCategory(Category catrgory) throws SQLException {
 		PreparedStatement ps = (PreparedStatement) Connector.connectionForDatabaseCategcorizedItemstru()
 				.prepareStatement((skriptForCategory(catrgory)), Statement.RETURN_GENERATED_KEYS);
-		
+
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
 		int generatedKey = 0;
 		if (rs.next()) {
 			generatedKey = rs.getInt(1);
-			
-	}
-return generatedKey;
+
+		}
+		return generatedKey;
 	}
 
-
-	private  String chekAutputCategory(String name) throws  SQLException {
+	private String chekAutputCategory(String name) throws SQLException {
 		ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery(skriptForChekCategory(name));
 		String nameQuery = null;
 		while (rs.next()) {
@@ -99,50 +92,92 @@ return generatedKey;
 		}
 		return nameQuery;
 	}
-	
-	private  void deleteCategory(String name) throws SQLException {
+
+	private void deleteCategory(String name) throws SQLException {
 		ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForDeleteCategory(name));
-		
+
 	}
-	
 
 	public void makeCategory(String name, int color, int count) throws SQLException {
 		String originalName = name;
-	
+
 		for (int i = 0; i < count; i++) {
 			if (i == 0) {
-				fulling(name, color);
+				fulling2(name, color);
 
 			}
-				name = originalName + (toNum(i));
-				fulling(name, color);
-			}
+			name = originalName + (toNum(i));
+			fulling2(name, color);
 		}
-	
+	}
 
-	private  int toNum(int index) {
+	private int toNum(int index) {
 		return index + 1;
 	}
-	
-	private void fulling (String name, int color) throws SQLException {
-	try { 
-		Category catrgory = new CategoryImpl(name, color);
-		addCatygory2(catrgory);
-		}  catch  (SQLException e) { 
-		    System.out.println("This category  with name ="  + " " + name  + " " + "already exists");
-            deleteCategory(name);
-            Category catrgory = new CategoryImpl(name, color);
-            addCatygory(catrgory);
-            System.out.println("was create new category with name =" + name);
-        } 
 
-}
-	
+	private void fulling(String name, int color) throws SQLException {
+		try {
+			Category catrgory = new CategoryImpl(name, color);
+			addCategory(catrgory);
+		} catch (SQLException e) {
+			System.out.println("This category  with name =" + " " + name + " " + "already exists");
+			deleteCategory(name);
+			Category catrgory = new CategoryImpl(name, color);
+			addCategory(catrgory);
+			System.out.println("was create new category with name =" + name);
+		}
+
+	}
+
+	private void fulling2(String name, int color) throws SQLException {
+		if (chekAutputCategory(name) != null) {
+			try {
+				throw new CustomSQLException("This Category name already exists");
+			} catch (SQLException e) {
+				System.out.println("This category  with name =" + " " + name + " " + "already exists");
+				deleteCategory(name);
+				Category catrgory = new CategoryImpl(name, color);
+				addCategory(catrgory);
+				System.out.println("was create new category with name =" + name);
+			}
+
+		} else {
+			Category catrgory = new CategoryImpl(name, color);
+			addCategory(catrgory);
+		}
+	}
+
+	public void makeCategory2(String name, int color, int count) throws SQLException {
+		String originalName = name;
+
+		if (chekAutputCategory(name) != null) {
+			throw new CustomSQLException("This Category name already exists");
+
+		}
+		for (int i = 0; i < count; i++) {
+			if (i == 0) {
+
+				Category catrgory = new CategoryImpl(name, color);
+				// allCategorys.add(catrgory);
+				addCategory(catrgory);
+			}
+			name = originalName + (toNum(i));
+			if (chekAutputCategory(name) != null) {
+
+			}
+			throw new CustomSQLException("This Category name already exists");
+		}
+		Category catrgory = new CategoryImpl(name, color);
+		// allCategorys.add(catrgory);
+		addCategory(catrgory);
+
+	}
+
 	public static void main(String[] args) throws FileNotFoundException, SQLException {
-		reinit();
+		// reinit();
 		SrripterCategory hh = new SrripterCategory();
 		hh.makeCategory("raccoon", 2, 8);
-		//hh.makeCatygory("cat", 2, 9);
-	
+		// hh.makeCatygory("cat", 2, 9);
+
 	}
 }

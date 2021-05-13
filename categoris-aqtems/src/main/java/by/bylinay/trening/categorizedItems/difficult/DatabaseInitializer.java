@@ -160,7 +160,7 @@ public class DatabaseInitializer {
 	//	}
 	//}
 
-	public  void makeItem(String name, int count) throws  SQLException  {
+	public  void makeItem(String name, int count) throws SQLException   {
 		String originalName = name;
 		if (chekAutputItem(name) != null) {
 			System.out.println("This Item name already exists");
