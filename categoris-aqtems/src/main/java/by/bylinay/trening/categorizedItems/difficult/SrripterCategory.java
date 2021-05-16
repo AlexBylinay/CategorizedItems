@@ -1,6 +1,7 @@
 package by.bylinay.trening.categorizedItems.difficult;
 
-import java.io.FileInputStream;
+import java.io.File;
+
 import java.io.FileNotFoundException;
 
 import java.sql.ResultSet;
@@ -25,11 +26,13 @@ public class SrripterCategory {
 	// private List<Category> allCategorys = new ArrayList<Category>();
 
 	public static void reinit() throws SQLException, FileNotFoundException {
-		FileInputStream in;
-		in = new FileInputStream("resources\\categorisItems.sql");
+		//FileInputStream in;
+		//in = new FileInputStream("resources\\categorisItems.sql");
+		// in = new FileInputStream("resources\\kanigoryTru.sql");
+		File file = new File("resources\\categorisItems.sql"); 
 		// in = new FileInputStream("resources\\kanigoryTru.sql");
 		@SuppressWarnings("resource")
-		Scanner s = new Scanner(in);
+		Scanner s = new Scanner(file);
 		s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
 
 		Statement statement = null;
@@ -174,9 +177,10 @@ public class SrripterCategory {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, SQLException {
-		// reinit();
+		reinit();
 		SrripterCategory hh = new SrripterCategory();
 		hh.makeCategory("raccoon", 2, 8);
+		
 		// hh.makeCatygory("cat", 2, 9);
 
 	}

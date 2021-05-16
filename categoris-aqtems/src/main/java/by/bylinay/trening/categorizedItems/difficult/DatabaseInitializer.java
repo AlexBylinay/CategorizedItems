@@ -1,6 +1,7 @@
 package by.bylinay.trening.categorizedItems.difficult;
 
-import java.io.FileInputStream;
+import java.io.File;
+
 import java.io.FileNotFoundException;
 
 import java.sql.ResultSet;
@@ -33,11 +34,12 @@ public class DatabaseInitializer {
 
 	public static void reinit() throws SQLException, FileNotFoundException
 	{
-		FileInputStream in;
-		in = new FileInputStream("resources\\categorisItems.sql");
+	//	FileInputStream in;
+		//in = new FileInputStream("resources\\categorisItems.sql");
+		File file = new File("resources\\categorisItems.sql"); 
 		// in = new FileInputStream("resources\\kanigoryTru.sql");
 		@SuppressWarnings("resource")
-		Scanner s = new Scanner(in);
+		Scanner s = new Scanner(file);
 		s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
 
 		Statement statement = null;
@@ -215,7 +217,7 @@ public class DatabaseInitializer {
 	public static void main(String[] args) throws FileNotFoundException, SQLException {
 		reinit();
 		DatabaseInitializer hh = new DatabaseInitializer();
-		hh.makeCatygory("raccoon", 2, 5);
+		//hh.makeCatygory("raccoon", 2, 5);
 		//hh.makeCatygory("cat", 2, 5);
 		//hh.makeCatygory("giraff", 2, 5);
 
