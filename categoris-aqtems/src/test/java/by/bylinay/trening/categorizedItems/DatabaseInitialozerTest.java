@@ -1,16 +1,15 @@
 package by.bylinay.trening.categorizedItems;
 
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.naming.NameNotFoundException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,13 +30,13 @@ import static org.junit.Assert.*;
 import by.bylinay.trening.categorizedItems.difficult.DatabaseInitializer;
 import by.bylinay.trening.categorizedItems.difficult.GiverTimeOfCreate;
 import by.bylinay.trening.categorizedItems.difficult.MakerSkript;
-import by.bylinay.trening.categorizedItems.difficult.SrripterCategory;
+import by.bylinay.trening.categorizedItems.difficult.SkripterCategory;
 
 
 
 class DatabaseInitialozerTest {
 	DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
-	SrripterCategory makeCategory = new SrripterCategory();
+	SkripterCategory makeCategory = new SkripterCategory();
     int cauntCategory = 4;
     int cauntItem = 3;
     String nameCatrgory = "raccoon";
@@ -48,6 +48,10 @@ class DatabaseInitialozerTest {
 	 @BeforeAll
 	  public static void setUp() {
 		 System.out.println("Start testing....... ");
+		 
+		 
+		 
+		 
 		
 	 }
 	 
@@ -63,7 +67,7 @@ class DatabaseInitialozerTest {
 	    }
 	 
 	@Test
-	void test() throws SQLException, ClassNotFoundException, FileNotFoundException {
+	public void test() throws SQLException, ClassNotFoundException, FileNotFoundException {
 		String timecreateExistingBase;
 		String timecreateCreatingBase;
 		boolean chek = checkingAvailabilityDatabase();
@@ -99,7 +103,7 @@ class DatabaseInitialozerTest {
 		return i;
 	}
 	@Test
-	void testAvailabilityDatabase() throws SQLException {
+	public void testAvailabilityDatabase() throws SQLException {
 		assertTrue( checkingAvailabilityDatabase());
 		 System.out.println("Database is available");
 	}
@@ -109,7 +113,7 @@ class DatabaseInitialozerTest {
 
 	
 	 @Test
-	    void testFullingDatabase ()  throws ClassNotFoundException, SQLException, FileNotFoundException{
+	 public void testFullingDatabase ()  throws ClassNotFoundException, SQLException, FileNotFoundException{
 		 makeCategory.reinit();
 	    chekCaunt = MakerSkript.getCauntCategoty ();
 	    assertEquals(0, chekCaunt);
@@ -117,7 +121,7 @@ class DatabaseInitialozerTest {
 	    
 	    
 	    @Test 
-	    void testMakeCatygory ()  throws ClassNotFoundException, SQLException{
+	    public void testMakeCatygory ()  throws ClassNotFoundException, SQLException{
 	    	databaseInitializer.makeCatygory(nameCatrgory, 2, cauntCategory);
 	     chekCaunt = MakerSkript.getCauntCategoty ();
 	     assertEquals(cauntCategory, chekCaunt);
@@ -128,11 +132,18 @@ class DatabaseInitialozerTest {
 	    }
 	    
 	    
+	    @Test// (expected =  SQL.class)
 
-	
-	
+	    public void tCatygory ()  throws ClassNotFoundException, SQLException{
+	    	Assertions.assertThrows(SQLException.class, () -> {
+	    		makeCategory.makeCategory2(nameCatrgory, cauntItem, cauntCategory);
+		    	makeCategory.makeCategory2(nameCatrgory, cauntItem, cauntCategory);
+	    	  });
+	    }
 	    	
 	
+	    	
+	    
 	    
 	     /*
 	      * @Test

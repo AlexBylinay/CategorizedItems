@@ -28,6 +28,7 @@ public class CheckQuery {
 			String name = resultSet.getString(2);
 			int color = resultSet.getInt(3);
 			String date = resultSet.getString(4);
+			
 			/*
 			 * int id2 = resultSet.getInt(5); String name2 = resultSet.getString(6); String
 			 * category = resultSet.getString(7); String date2 = resultSet.getString(8);

@@ -16,7 +16,7 @@ import by.bylinay.trening.categorizedItems.CategoryImpl;
 import by.bylinay.trening.categorizedItems.Connector;
 import by.bylinay.trening.categorizedItems.ConnectorAndStatement;
 
-public class SrripterCategory {
+public class SkripterCategory {
 
 	private String billetCatygory = "INSERT INTO category ( name_, color, date_) VALUES";
 	private String chekCategory = "SELECT name_ FROM category WHERE name_ = ";
@@ -178,8 +178,8 @@ public class SrripterCategory {
 
 	public static void main(String[] args) throws FileNotFoundException, SQLException {
 		reinit();
-		SrripterCategory hh = new SrripterCategory();
-		hh.makeCategory("raccoon", 2, 8);
+		SkripterCategory hh = new SkripterCategory();
+		hh.makeCategory("raccoon%n", 2, 8);
 		
 		// hh.makeCatygory("cat", 2, 9);
 

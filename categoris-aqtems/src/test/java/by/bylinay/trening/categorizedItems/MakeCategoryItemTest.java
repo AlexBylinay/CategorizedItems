@@ -26,7 +26,7 @@ class MakeCategoryItemTest {
    
     
     @Test
-    void testFullingDatabase ()  throws ClassNotFoundException, SQLException, FileNotFoundException{
+    public void testFullingDatabase ()  throws ClassNotFoundException, SQLException, FileNotFoundException{
     databaseInitializer.reinit();
     chekCaunt = MakerSkript.getCauntCategoty ();
     assertEquals(0, chekCaunt);
@@ -34,7 +34,7 @@ class MakeCategoryItemTest {
     
     
     @Test
-    void testMakeCatygory ()  throws ClassNotFoundException, SQLException{
+    public void testMakeCatygory ()  throws ClassNotFoundException, SQLException{
     databaseInitializer.makeCatygory(nameCatrgory, 2, cauntCategory);
     
     
