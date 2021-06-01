@@ -42,17 +42,15 @@ class DatabaseInitialozerTest {
     String nameCatrgory = "raccoon";
     String nameItem = "warior";
     int chekCaunt = 0;
-	 Statement statement = null;
-	 
+    Category category = new CategoryImpl ("raccoon", 2);
+	Statement statement = null;
+	
 	 
 	 @BeforeAll
 	  public static void setUp() {
 		 System.out.println("Start testing....... ");
 		 
 		 
-		 
-		 
-		
 	 }
 	 
 	 @BeforeEach
@@ -133,34 +131,26 @@ class DatabaseInitialozerTest {
 	    
 	    
 	    @Test// (expected =  SQL.class)
-
 	    public void tCatygory ()  throws ClassNotFoundException, SQLException{
-	    	Assertions.assertThrows(SQLException.class, () -> {
-	    		makeCategory.makeCategory2(nameCatrgory, cauntItem, cauntCategory);
-		    	makeCategory.makeCategory2(nameCatrgory, cauntItem, cauntCategory);
+	    	Assertions.assertThrows(IllegalArgumentException.class, () -> {
+	    		databaseInitializer.makeCatygory(nameCatrgory, cauntItem, cauntCategory);
+	    		databaseInitializer.makeCatygory(nameCatrgory, cauntItem, cauntCategory);
 	    	  });
 	    }
-	    	
-	
-	    	
 	    
-	    
-	     /*
-	      * @Test
-	    void testMakeItem() throws ClassNotFoundException, SQLException{
-	     databaseInitializer.makeItem(nameItem, cauntItem);
+	     
+	    @Test 
+	    public void testMakeItem() throws ClassNotFoundException, SQLException{
+	     databaseInitializer.makeItem(nameItem, category, cauntItem);
 	     chekCaunt = MakerSkript.getCauntItem();
 	    assertEquals(cauntItem, chekCaunt);
 	    int idItem = MakerSkript.getIdItem(nameItem + String.valueOf(cauntItem));
 	    assertEquals(idItem, cauntItem);
-	    System.out.println(idCategory);
-	    System.out.println(cauntCategory);
-	    System.out.println(idItem);
-	    System.out.println(cauntItem);
+	    }
 	
 	
 	
-}*/
+
 }
 	   
 	
