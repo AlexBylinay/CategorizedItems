@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -36,13 +36,10 @@ import by.bylinay.trening.categorizedItems.difficult.SkripterCategory;
 
 class DatabaseInitialozerTest {
 	DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
-	SkripterCategory makeCategory = new SkripterCategory();
-    int cauntCategory = 4;
-    int cauntItem = 3;
-    String nameCatrgory = "raccoon";
-    String nameItem = "warior";
-    int chekCaunt = 0;
-    Category category = new CategoryImpl ("raccoon", 2);
+	
+    
+   
+  
 	Statement statement = null;
 	
 	 
@@ -55,7 +52,7 @@ class DatabaseInitialozerTest {
 	 
 	 @BeforeEach
 	 public  void setUp1() throws  SQLException, FileNotFoundException {
-		  databaseInitializer.reinit();
+		 MakerSkript.reinit();
 	 System.out.println("Database ready to testing");
 		  
 	 }
@@ -65,10 +62,10 @@ class DatabaseInitialozerTest {
 	    }
 	 
 	@Test
-	public void test() throws SQLException, ClassNotFoundException, FileNotFoundException {
+	public void testCheckingCreationOrReCreationDatabase() throws SQLException, ClassNotFoundException, FileNotFoundException {
 		String timecreateExistingBase;
 		String timecreateCreatingBase;
-		boolean chek = checkingAvailabilityDatabase();
+		boolean chek = testcheckingAvailabilityDatabase();
 		if (chek == true) {
 			System.out.println("database was existed");
 			timecreateExistingBase = GiverTimeOfCreate.givTime();
@@ -89,7 +86,7 @@ class DatabaseInitialozerTest {
 	}
 
 	
-	public  boolean checkingAvailabilityDatabase() throws SQLException {
+	public  boolean testcheckingAvailabilityDatabase() throws SQLException {
 		boolean i = true;
 		
 		try {
@@ -102,7 +99,7 @@ class DatabaseInitialozerTest {
 	}
 	@Test
 	public void testAvailabilityDatabase() throws SQLException {
-		assertTrue( checkingAvailabilityDatabase());
+		assertTrue( testcheckingAvailabilityDatabase());
 		 System.out.println("Database is available");
 	}
 	
@@ -112,7 +109,8 @@ class DatabaseInitialozerTest {
 	
 	 @Test
 	 public void testFullingDatabase ()  throws ClassNotFoundException, SQLException, FileNotFoundException{
-		 makeCategory.reinit();
+		 int chekCaunt = 0;
+		 databaseInitializer.reinit();
 	    chekCaunt = MakerSkript.getCauntCategoty ();
 	    assertEquals(0, chekCaunt);
 	    }
@@ -120,37 +118,76 @@ class DatabaseInitialozerTest {
 	    
 	    @Test 
 	    public void testMakeCatygory ()  throws ClassNotFoundException, SQLException{
-	    	databaseInitializer.makeCatygory(nameCatrgory, 2, cauntCategory);
-	     chekCaunt = MakerSkript.getCauntCategoty ();
-	     assertEquals(cauntCategory, chekCaunt);
-	     int idCategory = MakerSkript.getIdCategory(nameCatrgory + (cauntCategory));
-	        assertEquals(idCategory, cauntCategory);
+	    	 int chekCaunt = 0;
+	    	databaseInitializer.makeCatygory("raccoon", 2,  4);
+	     chekCaunt = getCauntCategoty ();
+	     assertEquals( 4, chekCaunt);
+	     int idCategory = getIdCategory("raccoon" +  4);
+	        assertEquals(idCategory,  4);
 	        System.out.println(idCategory);
-	        System.out.println(cauntCategory);
+	        System.out.println( 4);
 	    }
 	    
 	    
 	    @Test// (expected =  SQL.class)
 	    public void tCatygory ()  throws ClassNotFoundException, SQLException{
 	    	Assertions.assertThrows(IllegalArgumentException.class, () -> {
-	    		databaseInitializer.makeCatygory(nameCatrgory, cauntItem, cauntCategory);
-	    		databaseInitializer.makeCatygory(nameCatrgory, cauntItem, cauntCategory);
+	    		databaseInitializer.makeCatygory("raccoon", 3, 4);
+	    		databaseInitializer.makeCatygory("raccoon", 3, 4);
 	    	  });
 	    }
 	    
 	     
 	    @Test 
-	    public void testMakeItem() throws ClassNotFoundException, SQLException{
-	     databaseInitializer.makeItem(nameItem, category, cauntItem);
+	    public void testightMakeItem() throws ClassNotFoundException, SQLException{
+	    	 int chekCaunt = 0;
+	    	  Category category = new CategoryImpl ("raccoon", 2);
+	     databaseInitializer.makeItem("warior", category, 3);
 	     chekCaunt = MakerSkript.getCauntItem();
-	    assertEquals(cauntItem, chekCaunt);
-	    int idItem = MakerSkript.getIdItem(nameItem + String.valueOf(cauntItem));
-	    assertEquals(idItem, cauntItem);
+	    assertEquals(3, chekCaunt);
+	    int idItem = getIdItem("warior" + String.valueOf(3));
+	   
+	    assertEquals(idItem, 3);
 	    }
 	
 	
-	
+	    public static int getIdItem ( String name) throws ClassNotFoundException, SQLException {
+			ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery( "select id from item where name_ = " +  "'" + (name)+ "'" + ";" );
+			int id = 0;
+			while (rs.next()) {
+			 id = rs.getInt(1);
+			}
+			return id;}
+	    
+	    public static int getCauntItem () throws ClassNotFoundException, SQLException {
+			ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery("SELECT count(*) FROM item");
+			int caunt = 0;
+			while (rs.next()) {
+				caunt = rs.getInt(1);
+			}
+			System.out.println(caunt);
+			return caunt;
+		}
 
+	    public static int getCauntCategoty () throws ClassNotFoundException, SQLException {
+			ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery("SELECT count(*) FROM category");
+			int caunt = 0;
+			while (rs.next()) {
+				caunt = rs.getInt(1);
+			}
+			System.out.println(caunt);
+			return caunt;
+		}
+	    
+		public static int getIdCategory ( String name) throws ClassNotFoundException, SQLException {
+			ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery("select id from category where name_ = " +  "'" + (name)+ "'" + ";" );
+			int id = 0;
+			while (rs.next()) {
+			 id = rs.getInt(1);
+			}
+			return id;
+			}
+	    
 }
 	   
 	

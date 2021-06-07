@@ -1,8 +1,12 @@
 package by.bylinay.trening.categorizedItems.difficult;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
 
 import by.bylinay.trening.categorizedItems.ConnectorAndStatement;
 
@@ -60,5 +64,31 @@ public class MakerSkript {
 		 id = rs.getInt(1);
 		}
 		return id;}
+	
+	
+	public static void reinit() throws SQLException, FileNotFoundException {
+
+		File file = new File("resources\\categorisItems.sql");
+		@SuppressWarnings("resource")
+		Scanner s = new Scanner(file);
+		s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
+
+		Statement statement = null;
+
+		try {
+			statement = ConnectorAndStatement.makeConnectionFndStatement();
+			while (s.hasNext()) {
+				String line = s.next().trim();
+
+				if (!line.isEmpty())
+					statement.execute(line);
+			}
+		} finally {
+			if (statement != null)
+				statement.close();
+		}
+
+		System.out.println("done create");
+	}
 }
 
