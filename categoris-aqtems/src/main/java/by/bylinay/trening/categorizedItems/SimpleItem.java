@@ -2,7 +2,7 @@ package by.bylinay.trening.categorizedItems;
 
 
 
-public class SimpleItem implements Item {
+public class SimpleItem  implements Item {
 
 	private int id;
 	private String name;
@@ -59,5 +59,28 @@ public class SimpleItem implements Item {
 
 		return category;
 	}
+	
+	public static String getNameTable () {
+		return "item";
+	}
+	
+	
+	public static String getNameColumnName () {
+		return "name_";
+	}
+	
+	public static String getNameColumnCategoryId () {
+		return "category_id";
+	}
+	
+	public static String getNameColumnDate () {
+		return "date_";
+	}
+	public static String getGeneralInsert () {
+		return "item ( name_, category_id, date_)";
+	}
+	
+
+
 
 }

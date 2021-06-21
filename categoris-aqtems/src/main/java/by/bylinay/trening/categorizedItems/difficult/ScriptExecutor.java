@@ -12,7 +12,7 @@ import by.bylinay.trening.categorizedItems.ConnectorAndStatement;
 
 
 
-public class MakerSkript {
+public class ScriptExecutor {
 	private static String quóeryCauntCategory = "SELECT count(*) FROM category";
 	private static String quóeryCauntItem = "SELECT count(*) FROM item";
 	private static String quóeryVolumeCategory = "select id from category where name_ = ";
@@ -66,7 +66,7 @@ public class MakerSkript {
 		return id;}
 	
 	
-	public static void reinit() throws SQLException, FileNotFoundException {
+	public static void clearDatabase() throws SQLException, FileNotFoundException {
 
 		File file = new File("resources\\categorisItems.sql");
 		@SuppressWarnings("resource")

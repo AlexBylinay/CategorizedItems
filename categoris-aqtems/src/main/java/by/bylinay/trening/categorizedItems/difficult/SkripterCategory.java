@@ -10,8 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -20,8 +19,7 @@ import by.bylinay.trening.categorizedItems.Category;
 import by.bylinay.trening.categorizedItems.CategoryImpl;
 import by.bylinay.trening.categorizedItems.Connector;
 import by.bylinay.trening.categorizedItems.ConnectorAndStatement;
-import by.bylinay.trening.categorizedItems.Item;
-import by.bylinay.trening.categorizedItems.SimpleItem;
+
 
 public class SkripterCategory {
 
@@ -74,10 +72,7 @@ public class SkripterCategory {
 		return (delete + "'" + (name + "'" + ";"));
 	}
 
-	private void addCategoryWithMistake(Category catrgory) throws SQLException {
-		ConnectorAndStatement.makeConnectionFndStatement().executeUpdate(skriptForCategory(catrgory) + "jnjn");
 
-	}
 
 	private int addCategory(Category catrgory) throws SQLException {
 		PreparedStatement ps = (PreparedStatement) Connector.connectionForDatabaseCategcorizedItemstru()
@@ -143,22 +138,6 @@ public class SkripterCategory {
 
 	}
 
-	public void makeCategory(String name, int color, int count) throws SQLException {
-		String originalName = name;
-
-		for (int i = 0; i < count; i++) {
-			if (i == 0) {
-				fulling2(name, color);
-
-			}
-			name = originalName + (toNum(i));
-			fulling2(name, color);
-		}
-	}
-
-	private int toNum(int index) {
-		return index + 1;
-	}
 
 	private void fulling(String name, int color) throws SQLException {
 		try {
@@ -174,50 +153,9 @@ public class SkripterCategory {
 
 	}
 
-	private void fulling2(String name, int color) throws SQLException {
-		if (chekAutputCategory(name) != null) {
-			try {
-				throw new CustomSQLException("This Category name already exists");
-			} catch (SQLException e) {
-				System.out.println("This category  with name =" + " " + name + " " + "already exists");
-				deleteCategory(name);
-				Category catrgory = new CategoryImpl(name, color);
-				addCategory(catrgory);
-				System.out.println("was create new category with name =" + name);
-			}
-
-		} else {
-			Category catrgory = new CategoryImpl(name, color);
-			addCategory(catrgory);
-		}
-	}
-
-	public void makeCategory2(String name, int color, int count) throws SQLException {
-		String originalName = name;
-
-		if (chekAutputCategory(name) != null) {
-			throw new CustomSQLException("This Category name already exists");
-
-		}
-		for (int i = 0; i < count; i++) {
-			if (i == 0) {
-
-				Category catrgory = new CategoryImpl(name, color);
-				// allCategorys.add(catrgory);
-				addCategory(catrgory);
-			}
-			name = originalName + (toNum(i));
-			if (chekAutputCategory(name) != null) {
-
-			}
-			throw new CustomSQLException("This Category name already exists");
-		}
-		Category catrgory = new CategoryImpl(name, color);
-		// allCategorys.add(catrgory);
-		addCategory(catrgory);
-
-	}
 	
+
+
 	
 	private List<Category> generateCategorys (String nameFormat, int color, int count){
 		List<Category> categorys = new ArrayList<>();

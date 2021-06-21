@@ -29,18 +29,14 @@ import static org.junit.Assert.*;
 
 import by.bylinay.trening.categorizedItems.difficult.DatabaseInitializer;
 import by.bylinay.trening.categorizedItems.difficult.GiverTimeOfCreate;
-import by.bylinay.trening.categorizedItems.difficult.MakerSkript;
+import by.bylinay.trening.categorizedItems.difficult.ScriptExecutor;
 import by.bylinay.trening.categorizedItems.difficult.SkripterCategory;
 
 
 
 class DatabaseInitialozerTest {
-	DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
 	
-    
-   
-  
-	Statement statement = null;
+	
 	
 	 
 	 @BeforeAll
@@ -52,7 +48,7 @@ class DatabaseInitialozerTest {
 	 
 	 @BeforeEach
 	 public  void setUp1() throws  SQLException, FileNotFoundException {
-		 MakerSkript.reinit();
+		 ScriptExecutor.clearDatabase();;
 	 System.out.println("Database ready to testing");
 		  
 	 }
@@ -90,7 +86,9 @@ class DatabaseInitialozerTest {
 		boolean i = true;
 		
 		try {
-			statement = ConnectorAndStatement.makeConnectionFndStatement();
+			
+			@SuppressWarnings("unused")
+			Statement statement = ConnectorAndStatement.makeConnectionFndStatement();
 			
 		} catch (SQLException e) {
 			i = false;
@@ -110,14 +108,15 @@ class DatabaseInitialozerTest {
 	 @Test
 	 public void testFullingDatabase ()  throws ClassNotFoundException, SQLException, FileNotFoundException{
 		 int chekCaunt = 0;
-		 databaseInitializer.reinit();
-	    chekCaunt = MakerSkript.getCauntCategoty ();
+		 DatabaseInitializer.reinit();
+	    chekCaunt = ScriptExecutor.getCauntCategoty ();
 	    assertEquals(0, chekCaunt);
 	    }
 	    
 	    
 	    @Test 
 	    public void testMakeCatygory ()  throws ClassNotFoundException, SQLException{
+	    	DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
 	    	 int chekCaunt = 0;
 	    	databaseInitializer.makeCatygory("raccoon", 2,  4);
 	     chekCaunt = getCauntCategoty ();
@@ -131,6 +130,7 @@ class DatabaseInitialozerTest {
 	    
 	    @Test// (expected =  SQL.class)
 	    public void tCatygory ()  throws ClassNotFoundException, SQLException{
+	    	DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
 	    	Assertions.assertThrows(IllegalArgumentException.class, () -> {
 	    		databaseInitializer.makeCatygory("raccoon", 3, 4);
 	    		databaseInitializer.makeCatygory("raccoon", 3, 4);
@@ -140,10 +140,11 @@ class DatabaseInitialozerTest {
 	     
 	    @Test 
 	    public void testightMakeItem() throws ClassNotFoundException, SQLException{
+	    	DatabaseInitializer databaseInitializer = new DatabaseInitializer ();
 	    	 int chekCaunt = 0;
-	    	  Category category = new CategoryImpl ("raccoon", 2);
+	    	  Category category = new CategoryImpl (1,"raccoon", 2);
 	     databaseInitializer.makeItem("warior", category, 3);
-	     chekCaunt = MakerSkript.getCauntItem();
+	     chekCaunt = ScriptExecutor.getCauntItem();
 	    assertEquals(3, chekCaunt);
 	    int idItem = getIdItem("warior" + String.valueOf(3));
 	   

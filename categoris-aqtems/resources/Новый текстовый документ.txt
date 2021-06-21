@@ -8,3 +8,43 @@
 		}
 	}
 	
+
+
+int id = resultSet.getInt(1);
+			String name = resultSet.getString(2);
+			int color = resultSet.getInt(3);
+			String date = resultSet.getString(4);
+			/*
+			 * int id2 = resultSet.getInt(5); String name2 = resultSet.getString(6); String
+			 * category = resultSet.getString(7); String date2 = resultSet.getString(8);
+			 */
+			Category category = new CategoryImpl(id, name, color, date);
+
+			// System.out.printf( " %d. %7s %2d. -%s %14d. %s %-10s. %s. \n ", id, name,
+			// color, date, id2, name2, category, date2 );
+			System.out.println(category.getId());
+			System.out.println(category.getName());
+			//System.out.println(category.getColor());
+			System.out.println(category.getDate());
+
+		}
+		resultSet.close();
+		connection.close();
+	}
+
+
+
+ResultSet resultSet = statement.executeQuery ("  SELECT name_ FROM category WHERE name_  IN ('raccoon3', 'raccoon2', 'raccoon1'); ");
+		
+		List <String> names = new ArrayList();
+		
+		while (resultSet.next()) {
+			String name = resultSet.getString(1);
+			names.add(name);
+			
+		}
+		System.out.println(names);
+
+		resultSet.close();
+		connection.close();
+	}

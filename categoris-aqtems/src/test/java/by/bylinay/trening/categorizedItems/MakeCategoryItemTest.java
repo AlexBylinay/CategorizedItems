@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import by.bylinay.trening.categorizedItems.difficult.DatabaseInitializer;
-import by.bylinay.trening.categorizedItems.difficult.MakerSkript;
+import by.bylinay.trening.categorizedItems.difficult.ScriptExecutor;
 
 class MakeCategoryItemTest {
 	 
@@ -28,7 +28,7 @@ class MakeCategoryItemTest {
     @Test
     public void testFullingDatabase ()  throws ClassNotFoundException, SQLException, FileNotFoundException{
     databaseInitializer.reinit();
-    chekCaunt = MakerSkript.getCauntCategoty ();
+    chekCaunt = ScriptExecutor.getCauntCategoty ();
     assertEquals(0, chekCaunt);
     }
     
@@ -38,9 +38,9 @@ class MakeCategoryItemTest {
     databaseInitializer.makeCatygory(nameCatrgory, 2, cauntCategory);
     
     
-     chekCaunt = MakerSkript.getCauntCategoty ();
+     chekCaunt = ScriptExecutor.getCauntCategoty ();
      assertEquals(cauntCategory, chekCaunt);
-     int idCategory = MakerSkript.getIdCategory(nameCatrgory + (cauntCategory));
+     int idCategory = ScriptExecutor.getIdCategory(nameCatrgory + (cauntCategory));
         assertEquals(idCategory, cauntCategory);
         System.out.println(idCategory);
         System.out.println(cauntCategory);
