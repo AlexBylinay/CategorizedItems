@@ -1,21 +1,26 @@
 package by.bylinay.trening.categorizedItems.difficult;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
+
+import com.mysql.jdbc.Statement;
 
 import by.bylinay.trening.categorizedItems.ConnectorAndStatement;
 
 
 
 public class MakerSkript {
-	private static String qu骵ryCauntCategory = "SELECT count(*) FROM category";
-	private static String qu骵ryCauntItem = "SELECT count(*) FROM item";
-	private static String qu骵ryVolumeCategory = "select id from category where name_ = ";
-	private static String qu骵ryVolumeItem = "select id from item where name_ = ";
+	private static String qu贸eryCauntCategory = "SELECT count(*) FROM category";
+	private static String qu贸eryCauntItem = "SELECT count(*) FROM item";
+	private static String qu贸eryVolumeCategory = "select id from category where name_ = ";
+	private static String qu贸eryVolumeItem = "select id from item where name_ = ";
 	
 	public static int getCauntCategoty () throws ClassNotFoundException, SQLException {
-		ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery(qu骵ryCauntCategory);
+		ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery(qu贸eryCauntCategory);
 		int caunt = 0;
 		while (rs.next()) {
 			caunt = rs.getInt(1);
@@ -25,7 +30,7 @@ public class MakerSkript {
 	}
 	
 	public static int getCauntItem () throws ClassNotFoundException, SQLException {
-		ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery(qu骵ryCauntItem);
+		ResultSet rs = ConnectorAndStatement.makeConnectionFndStatement().executeQuery(qu贸eryCauntItem);
 		int caunt = 0;
 		while (rs.next()) {
 			caunt = rs.getInt(1);
@@ -37,7 +42,7 @@ public class MakerSkript {
 
 	
 	private static String makeSkriptForGetIdCategory ( String name) {
-		return (qu骵ryVolumeCategory +  "'" + name+ "'" + ";" );
+		return (qu贸eryVolumeCategory +  "'" + name+ "'" + ";" );
 	}
 	
 	public static int getIdCategory ( String name) throws ClassNotFoundException, SQLException {
@@ -50,7 +55,7 @@ public class MakerSkript {
 		}
 
 	private static String makeSkriptForGetIdItem ( String name) {
-		return (qu骵ryVolumeItem +  "'" + name+ "'" + ";" );
+		return (qu贸eryVolumeItem +  "'" + name+ "'" + ";" );
 	}
 	
 	public static int getIdItem ( String name) throws ClassNotFoundException, SQLException {
@@ -60,5 +65,29 @@ public class MakerSkript {
 		 id = rs.getInt(1);
 		}
 		return id;}
+	public static void reinit() throws SQLException, FileNotFoundException {
+
+		File file = new File("resources\\categorisItems.sql");
+		@SuppressWarnings("resource")
+		Scanner s = new Scanner(file);
+		s.useDelimiter("/\\*[\\s\\S]*?\\*/|--[^\\r\\n]*|;");
+
+		Statement statement = null;
+
+		try {
+			statement = (Statement) ConnectorAndStatement.makeConnectionFndStatement();
+			while (s.hasNext()) {
+				String line = s.next().trim();
+
+				if (!line.isEmpty())
+					statement.execute(line);
+			}
+		} finally {
+			if (statement != null)
+				statement.close();
+		}
+
+		//System.out.println("done create");
+	}
 }
 

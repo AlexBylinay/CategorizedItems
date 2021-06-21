@@ -1,7 +1,5 @@
 package by.bylinay.trening.categorizedItems;
 
-
-
 public class SimpleItem implements Item {
 
 	private int id;
@@ -16,29 +14,26 @@ public class SimpleItem implements Item {
 		this.categoryId = categoryId;
 		this.date = date;
 	}
-	
-	public SimpleItem( String name, int categoryId) {
+
+	public SimpleItem(String name, int categoryId) {
 		this.name = name;
 		this.categoryId = categoryId;
 		this.date = DataUtil.getDate();
-	
+
 	}
 
-	
 	public SimpleItem(int id, String name, int categoryId, String date, Category category) {
 		this(id, name, categoryId, date);
 		this.category = category;
-		
+
 	}
 
-	public SimpleItem( String name, int categoryId,  Category category) {
-		this( name, categoryId);
+	public SimpleItem(String name, int categoryId, Category category) {
+		this(name, categoryId);
 		this.category = category;
 		this.date = DataUtil.getDate();
 	}
 
-	
-	
 	public int getId() {
 		return id;
 	}
