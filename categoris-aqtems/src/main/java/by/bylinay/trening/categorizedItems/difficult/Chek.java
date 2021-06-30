@@ -24,7 +24,10 @@ public class Chek {
 
 		Statement statement = (Statement) connection.createStatement();
 		ResultSet resultSet = statement.executeQuery("SELECT  * FROM category  order by id ");
-
+		//ResultSet resultSet = statement.executeQuery( "ARRAY VARCHAR ( SELECT name_ FROM category WHERE name_ = 'raccoon3'and  'raccoon2');");
+		//ResultSet resultSet = statement.executeQuery ("  SELECT name_ FROM category WHERE name_  IN ('raccoon3', 'raccoon2'); ");
+		
+		
 		while (resultSet.next()) {
 
 			int id = resultSet.getInt(1);
@@ -40,12 +43,25 @@ public class Chek {
 			// System.out.printf( " %d. %7s %2d. -%s %14d. %s %-10s. %s. \n ", id, name,
 			// color, date, id2, name2, category, date2 );
 			System.out.println(category.getId());
-			System.out.println(category.getName());
+			System.out.println(((CategoryImpl) category).getName());
 			//System.out.println(category.getColor());
-			System.out.println(category.getDate());
+			System.out.println(((CategoryImpl) category).getDate());
 
 		}
 		resultSet.close();
 		connection.close();
 	}
+	
+	//ResultSet resultSet = statement.executeQuery("SELECT name_ FROM category WHERE name_ = 'raccoon3';");
+	
+			/*ResultSet resultSet = statement.executeQuery("SELECT name_ FROM category WHERE name_ = 'raccoon2' and 'raccoon3' and 'raccoon1';");
+			 ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
+			
+			 int columnCount = rsmd.getColumnCount();
+			 
+			 String name = rsmd.getColumnCharacterEncoding(1);
+			 lis.setName(rs.getString("name"));
+				String registeredUserLogin = resultSet.getString("name_");
+			 System.out.println(columnCount);*/
+			
 }

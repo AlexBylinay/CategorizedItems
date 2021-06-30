@@ -28,6 +28,7 @@ public class CheckQuery {
 			String name = resultSet.getString(2);
 			int color = resultSet.getInt(3);
 			String date = resultSet.getString(4);
+			
 			/*
 			 * int id2 = resultSet.getInt(5); String name2 = resultSet.getString(6); String
 			 * category = resultSet.getString(7); String date2 = resultSet.getString(8);
@@ -37,7 +38,7 @@ public class CheckQuery {
 			// System.out.printf( " %d. %7s %2d. -%s %14d. %s %-10s. %s. \n ", id, name,
 			// color, date, id2, name2, category, date2 );
 			System.out.println(category.getId());
-			System.out.println(category.getName());
+			System.out.println(((CategoryImpl) category).getName());
 
 		}
 		resultSet.close();

@@ -5,15 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
-
-import com.mysql.jdbc.Statement;
 
 import by.bylinay.trening.categorizedItems.ConnectorAndStatement;
 
 
 
-public class MakerSkript {
+public class ScriptExecutor {
 	private static String quóeryCauntCategory = "SELECT count(*) FROM category";
 	private static String quóeryCauntItem = "SELECT count(*) FROM item";
 	private static String quóeryVolumeCategory = "select id from category where name_ = ";
@@ -65,7 +64,9 @@ public class MakerSkript {
 		 id = rs.getInt(1);
 		}
 		return id;}
-	public static void reinit() throws SQLException, FileNotFoundException {
+	
+	
+	public static void clearDatabase() throws SQLException, FileNotFoundException {
 
 		File file = new File("resources\\categorisItems.sql");
 		@SuppressWarnings("resource")
@@ -75,7 +76,7 @@ public class MakerSkript {
 		Statement statement = null;
 
 		try {
-			statement = (Statement) ConnectorAndStatement.makeConnectionFndStatement();
+			statement = ConnectorAndStatement.makeConnectionFndStatement();
 			while (s.hasNext()) {
 				String line = s.next().trim();
 
@@ -87,7 +88,6 @@ public class MakerSkript {
 				statement.close();
 		}
 
-		//System.out.println("done create");
+		System.out.println("done create");
 	}
 }
-

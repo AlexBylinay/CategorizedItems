@@ -3,13 +3,9 @@ package by.bylinay.trening.categorizedItems;
 
 
 
-public interface Category {
-	public int getId();
-
+public interface Category extends  Entity  {
 	public String getName();
-
+	public int getId();
 	public int getColor();
-
-	public String  getDate();
 
 }
