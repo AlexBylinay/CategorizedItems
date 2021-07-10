@@ -152,8 +152,8 @@ public class DatabaseInitializer {
 		
 	private List<Item> createItem(List<String> names, Category catrgory) {
 		List<Item> items = new ArrayList<>();
-		names.forEach(b -> {
-			Item item = new SimpleItem(b, catrgory.getId());
+		names.forEach(name -> {
+			Item item = new SimpleItem(name, catrgory.getId());
 			items.add(item);
 		});
 		return items;
