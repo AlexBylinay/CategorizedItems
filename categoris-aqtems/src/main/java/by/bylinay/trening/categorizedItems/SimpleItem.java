@@ -8,6 +8,9 @@ public class SimpleItem  implements Item {
 	private int categoryId;
 	private String date;
 	private Category category;
+	private double money;
+
+
 
 	public SimpleItem(int id, String name, int categoryId, String date) {
 		this.id = id;
@@ -35,6 +38,12 @@ public class SimpleItem  implements Item {
 		this.category = category;
 		this.date = DataUtil.getDate();
 	}
+	
+	public SimpleItem(int id, String name, int categoryId,  double money) {
+		this( name, categoryId);
+		this.categoryId = categoryId;
+		this.money = money;
+	}
 
 	
 	
@@ -46,7 +55,7 @@ public class SimpleItem  implements Item {
 		return name;
 	}
 
-	public int getcatygoryId() {
+	public int getCategoryId() {
 		return categoryId;
 	}
 
@@ -66,6 +75,18 @@ public class SimpleItem  implements Item {
 		return categoryId;	
 	}
 	
+	public double getTransactionValue() {
+		return money;
+	}
+
+	public void setTransactionValue(double money) {
+		this.money = money;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public  String [] getNamesColumns () {
 		 String[] columns = {"name_","category_id", "date_"};
 		return columns;
@@ -74,7 +95,7 @@ public class SimpleItem  implements Item {
 	
 	
 	public Object[] getColumnsValue() {
-		Object[] columns =  {getName(), getcatygoryId(), getDate()};
+		Object[] columns =  {getName(), getCategoryId(), getDate()};
 		return columns;
 	
 	}

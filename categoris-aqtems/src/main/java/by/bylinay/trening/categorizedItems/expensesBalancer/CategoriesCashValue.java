@@ -1,4 +1,4 @@
-package by.bylinay.trening.categorizedItems.ExpensesBalancer;
+package by.bylinay.trening.categorizedItems.expensesBalancer;
 
 
 

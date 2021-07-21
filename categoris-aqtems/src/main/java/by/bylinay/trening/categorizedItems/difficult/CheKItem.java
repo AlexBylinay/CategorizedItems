@@ -43,7 +43,7 @@ public class CheKItem {
 			
 			System.out.println(((SimpleItem) item).getName());
 			System.out.println(item.getId());
-			System.out.println(item.getcatygoryId());
+			System.out.println(item.getCategoryId());
 		
 		}
 		
