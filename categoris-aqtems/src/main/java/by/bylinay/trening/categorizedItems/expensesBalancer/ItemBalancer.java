@@ -1,117 +1,101 @@
 package by.bylinay.trening.categorizedItems.expensesBalancer;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import by.bylinay.trening.categorizedItems.Category;
 import by.bylinay.trening.categorizedItems.CategoryImpl;
 import by.bylinay.trening.categorizedItems.Item;
 import by.bylinay.trening.categorizedItems.SimpleItem;
 
 public class ItemBalancer {
-    Map<Integer, TransactionValue> totalValues = new HashMap<>();
-
-	public Map<Category, Double> getPrioritiesOld(Map<Category, Integer> targets, List<Item> items) {
-		Map<Category, Double> indicators = new HashMap<>();
-		for (int i = 0; i < items.size(); i++) {
-			Item item = items.get(i);
-			Category category = getCategory(putToArray(targets), item);
-			int purpose = targets.get(category);
-			double spent = item.getTransactionValue();
-			double result = doСounting(spent, purpose);
-			indicators.put(category, result);
+	Map<Integer, TransactionValue> totalValues = new HashMap<>();
+	
+	public Map<Category, Priority> getPriorities(Map<Category, Integer> targets, List<Item> items) {
+		
+		for (Item item : items) {
+			int categoryId = item.getCategoryId();
+			TransactionValue itemValue = new TransactionValue(item.getManeyInСents());
+			TransactionValue totalValue = totalValues.get(categoryId);
+			if (totalValue == null) {
+				totalValue = new TransactionValue(itemValue);
+			} else {
+				totalValue.add(itemValue);
+			}
+			totalValues.put(categoryId, totalValue);
+			
+			
 		}
-		return indicators;
+		int i = 0;
+		Map<Category, Priority> priorities = new HashMap<>();
+		for (Entry<Category, Integer> target : targets.entrySet()) {
+			i++;
+			Category category = target.getKey();
+			TransactionValue totalValue = totalValues.get(category.getId());
+			Priority priority = null;
+			Double percentage = null;
+		
+			if (totalValue == null) {
+				
+				
+				 percentage = 0.0;
+				int amount = 0;
+				priority = new Priority(percentage, amount);
+				System.out.println("/" + category.getName());
+				System.out.println("/" + priority.getPersent());
+				System.out.println("/" + priority.getAmountMany());
+				System.out.println("/" + priority.getDifferent(target.getValue()));
+			
+			} else {
+				percentage = getRatio(totalValue.getAmount(), target.getValue());
+			    priority = new Priority(percentage, totalValue.getAmount());
+			    System.out.println(i);
+				System.out.println(category.getName());
+				System.out.println(priority.getPersent());
+				System.out.println(percentage);
+				System.out.println(priority.getAmountMany());
+				System.out.println( priority.getDifferent(target.getValue()));
+				System.out.println("||||||");
+				
+			}
+			priorities.put(category, priority);
+		}
+
+		return priorities;
 	}
 	
 	
-	public Map<Category, Priority> getPriorities(Map<Category, Double> targets, List<Item> items) {
-	
-	    
-	    for (Item item : items) {
-	        int categoryId = item.getCategoryId();
-	        TransactionValue itemValue = new TransactionValue(item.getTransactionValue());
-	        TransactionValue totalValue = totalValues.get(categoryId);
-	        if (totalValue == null) {
-	            totalValue = new TransactionValue(itemValue);
-	            totalValues.put(categoryId, totalValue);
-	        } else {
-	            totalValue.add(itemValue);
-	            totalValues.put(categoryId, totalValue);
-	            totalValues.put(categoryId, null);
-	        }
-	    }
-	    Map<Category, Priority> priorities = new HashMap<>();
-	    for  (Entry<Category, Double> target : targets.entrySet())
-	    {
-	        Category category = target.getKey();
-	        TransactionValue totalValue = totalValues.get(category.getId());
-	        if (totalValue == null) {
-	        	 Double percentage = 0.0;
-	        	 long amount = 0;
-	        	 Priority priority = new Priority(percentage, amount);
-		         priorities.put(category, priority);
-		      
-		         System.out.println("/" + priority.getPersent());
-		            System.out.println("/" +category.getName());
-		            System.out.println("/" +priority.getAmountMany());
-		        
-  // TODO что тогда?
-	        } else {
-	        	
-	            Double percentage = (totalValue.divide(target.getValue()));
-	            Priority priority = new Priority(percentage, totalValue.getAmount());
-	            priorities.put(category, priority);
-	            
-	            System.out.println(priority.getPersent());
-	            System.out.println(category.getName());
-	            System.out.println(priority.getAmountMany());
-	        }
-	    }
-	   
-	    return priorities;
+	private Map<Integer, TransactionValue> nm(List<Item> items){
+		for (Item item : items) {
+			int categoryId = item.getCategoryId();
+			TransactionValue itemValue = new TransactionValue(item.getManeyInСents());
+			TransactionValue totalValue = totalValues.get(categoryId);
+			if (totalValue == null) {
+				totalValue = new TransactionValue(itemValue);
+			} else {
+				totalValue.add(itemValue);
+			}
+			totalValues.put(categoryId, totalValue);
+		}
+		return totalValues;
+		
 	}
 	
-
-	private Category getCategory(Category[] categories, Item item) {
-		Category category = categories[0];
-		for (int i = 0; categories[i].getId() != item.getCategoryId(); i++) {
-			category = categories[toNum(i)];
+	
+	
+	private Double getRatio(int value, int target) {
+		double result = 0;
+		if (target == 0.0) {
+			result = value ;
+		} else {
+			result = (double) value / target;
 		}
-		return category;
+		return result;
 
-	}
-
-	private int toNum(int index) {
-		return index + 1;
-	}
-
-	private Category[] putToArray(Map<Category, Integer> rules) {
-		int caunt = 0;
-		Category[] categories = new Category[rules.size()];
-		for (Category key : rules.keySet()) {
-			caunt++;
-			categories[caunt - 1] = key;
-		}
-		return categories;
-	}
-
-	private double doСounting(double spent, int amount) {
-		double value = (double) spent / amount;
-		double scale = Math.pow(10, 3);
-		return Math.ceil(value * scale) / scale;
-	}
-
-	private void toWatch(Map<Category, Double> priorities) {
-		for (Map.Entry<Category, Double> pair : priorities.entrySet()) {
-			String name = pair.getKey().getName();
-			double value = pair.getValue();
-			System.out.println(name + ":" + value);
-
-		}
+		
 	}
 
 	public static void main(String[] args) {
@@ -120,64 +104,53 @@ public class ItemBalancer {
 		Category categoryFood = new CategoryImpl(1, "food", 1);
 		Category categoryClothes = new CategoryImpl(2, "clothes", 1);
 		Category categoryDrink = new CategoryImpl(3, "drink", 1);
-		Category categoryFun = new CategoryImpl(4, "fun", 1);
+		Category categoryFun = new CategoryImpl(4, "fun", 2);
 		Category categoryP = new CategoryImpl(5, "P", 1);
 
-		Item item = new SimpleItem(1, "yu", 3, 15.0);
-		Item item1 = new SimpleItem(2, "yu2", 1, 16.9);
-		Item item2 = new SimpleItem(3, "yu3", 4, 4.4);
-	
-		
-		Item item4 = new SimpleItem(4, "my", 3, 1.3);
-		Item item5 = new SimpleItem(5, "my2", 1, 1.6);
-		Item item6 = new SimpleItem(6, "my3", 4, 4.0);
-		Item item7 = new SimpleItem(7, "my4", 2, 3.6);
-		Item item8 = new SimpleItem(8, "my5", 5, 1);
-		Item item9 = new SimpleItem(0, "u", 0, 0);
-		
-		
+		Item item = new SimpleItem(1, "yu", 3, new BigDecimal(8));
+		Item item1 = new SimpleItem(2, "yu2", 1, new BigDecimal(2));
+		Item item2 = new SimpleItem(3, "yu3", 4, new BigDecimal(9));
+
+		Item item4 = new SimpleItem(4, "my", 3, new BigDecimal(7.1));
+		Item item5 = new SimpleItem(5, "my2", 1,new BigDecimal (5));
+		Item item6 = new SimpleItem(6, "my3", 4, new BigDecimal (4));
+		Item item7 = new SimpleItem(7, "my4", 2, new BigDecimal (6));
+		Item item8 = new SimpleItem(8, "my5", 5, new BigDecimal (1));
+		Item item9 = new SimpleItem(0, "u", 4, new BigDecimal(1));
 
 		Map<Category, Integer> rules = new HashMap<>();
-		Map<Category, Double> rulesNew = new HashMap<>();
+		Map<Category, Integer> rulesNew = new HashMap<>();
 		List<Item> items = new ArrayList<>();
 		List<Item> items2 = new ArrayList<>();
-		rules.put(categoryFood, 13);
+		rules.put(categoryFood, 9);
 		rules.put(categoryClothes, 18);
-		rules.put(categoryDrink, 9);
-		rules.put(categoryFun, 53);
+		rules.put(categoryDrink, 14);
+		rules.put(categoryFun, 6);
 		rules.put(categoryP, 11);
-		
-		
-		rulesNew.put(categoryFood, 0.0);
-		rulesNew.put(categoryClothes, 18.09);
-		rulesNew.put(categoryDrink, 9.98);
-		rulesNew.put(categoryFun, 53.44);
-		rulesNew.put(categoryP, 10.0);
+
+		rulesNew.put(categoryFood, 0);
+		rulesNew.put(categoryClothes, 18);
+		rulesNew.put(categoryDrink, 14);
+		rulesNew.put(categoryFun, 3);
+		rulesNew.put(categoryP, 10);
+		rulesNew.put(categoryDrink, 14);
 
 		items.add(item);
 		items.add(item1);
 		items.add(item2);
-		
+
 		items2.add(item4);
 		items2.add(item5);
 		items2.add(item6);
 		items2.add(item7);
 		items2.add(item8);
-		items2.add(item9);
+		items2.add(item1);
+		items2.add(item1);
 
-		Category[] grades = { categoryFood, categoryClothes, categoryDrink, categoryFun, categoryP };
-
-		//balancer.getPrioritiesOld(rules, items);
-		//balancer.toWatch(balancer.getPrioritiesOld(rules, items));
-		TransactionValue trast = new TransactionValue();
-		Priority priority = new Priority(22.56, 1236);
-		trast.setAmount(200);
-		trast.addDouble(1.12);
-		//System.out.println(trast.getAmount());
-		//System.out.println(priority.getAmount());
-		//System.out.println(priority.getAmount());
-		balancer.getPriorities(rulesNew, items);
+	
 		balancer.getPriorities(rulesNew, items2);
+		System.out.println("manowar");
+		balancer.getPriorities(rules, items);
 
 	}
 

@@ -10,11 +10,10 @@ public class Priority {
 	}
 
 	public Priority() {
-
 	}
 
 	public double getPersent() {
-		return persent*100;
+		return persent;
 	}
 
 	public void setPersent(double persent) {
@@ -32,4 +31,10 @@ public class Priority {
 	public double getAmountMany() {
 		return (double) allAmoun / 100;
 	}
+
+	public double getDifferent(double manye) {
+		return (double) (manye * 100 - allAmoun) / 100;
+
+	}
+
 }

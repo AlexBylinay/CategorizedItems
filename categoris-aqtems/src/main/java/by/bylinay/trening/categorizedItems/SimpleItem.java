@@ -1,5 +1,7 @@
 package by.bylinay.trening.categorizedItems;
 
+import java.math.BigDecimal;
+
 public class SimpleItem  implements Item {
 
 	private static final String[] String = null;
@@ -8,7 +10,7 @@ public class SimpleItem  implements Item {
 	private int categoryId;
 	private String date;
 	private Category category;
-	private double money;
+	private BigDecimal  money;
 
 
 
@@ -39,7 +41,7 @@ public class SimpleItem  implements Item {
 		this.date = DataUtil.getDate();
 	}
 	
-	public SimpleItem(int id, String name, int categoryId,  double money) {
+	public SimpleItem(int id, String name, int categoryId,  BigDecimal  money) {
 		this( name, categoryId);
 		this.categoryId = categoryId;
 		this.money = money;
@@ -75,11 +77,11 @@ public class SimpleItem  implements Item {
 		return categoryId;	
 	}
 	
-	public double getTransactionValue() {
+	public BigDecimal  getTransactionValue() {
 		return money;
 	}
 
-	public void setTransactionValue(double money) {
+	public void setTransactionValue(BigDecimal  money) {
 		this.money = money;
 	}
 	
@@ -93,11 +95,20 @@ public class SimpleItem  implements Item {
 		
 	}
 	
+	public int  getManeyInСents() {
+		return (int)  (money.doubleValue()*100);
+	}
 	
 	public Object[] getColumnsValue() {
 		Object[] columns =  {getName(), getCategoryId(), getDate()};
 		return columns;
 	
+	}
+
+	@Override
+	public void setTransactionValue(double money) {
+		
+		
 	}
 	
 

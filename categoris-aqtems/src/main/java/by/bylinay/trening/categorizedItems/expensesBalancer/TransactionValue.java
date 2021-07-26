@@ -1,26 +1,24 @@
 package by.bylinay.trening.categorizedItems.expensesBalancer;
 
 public class TransactionValue {
-	long amount;
-	
+	int amount;
 
 	public TransactionValue() {
 	}
 
 	public TransactionValue(double target) {
-		this.amount = (long) (target * 100);
+		this.amount =  (int) (target);
 	}
 
 	public TransactionValue(TransactionValue value) {
 		this.amount = value.getAmount();
 	}
 
-
-	public long getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(long amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
@@ -42,5 +40,7 @@ public class TransactionValue {
 	public void add(TransactionValue valoe) {
 		this.amount = amount + valoe.getAmount();
 	}
+	
+		
 
 }

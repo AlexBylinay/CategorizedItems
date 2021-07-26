@@ -1,6 +1,6 @@
 package by.bylinay.trening.categorizedItems;
 
-
+import java.math.BigDecimal;
 
 public interface Item extends  Entity {
 
@@ -8,7 +8,8 @@ public interface Item extends  Entity {
 	public String getName();
 	public int getCategoryId();
 	public Category getCategory();
-	public double getTransactionValue();
+	public BigDecimal  getTransactionValue();
 	public void setTransactionValue(double money);
+	public int  getManeyInСents();
 
 }
