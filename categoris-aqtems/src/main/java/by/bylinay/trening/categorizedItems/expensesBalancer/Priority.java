@@ -1,10 +1,9 @@
 package by.bylinay.trening.categorizedItems.expensesBalancer;
-
 public class Priority {
 	double persent;
-	long allAmoun;
+	int allAmoun;
 
-	public Priority(double persent, long allAmount) {
+	public Priority(double persent, int allAmount) {
 		this.persent = persent;
 		this.allAmoun = allAmount;
 	}
@@ -20,20 +19,22 @@ public class Priority {
 		this.persent = persent;
 	}
 
-	public long getAllAmount() {
+	public int getAllAmount() {
 		return allAmoun;
 	}
 
-	public void setAllAmount(long allAmount) {
+	public void setAllAmount(int allAmount) {
 		this.allAmoun = allAmount;
 	}
 
-	public double getAmountMany() {
-		return (double) allAmoun / 100;
+	public String getAmountMany() {
+				
+		return (allAmoun/100 +"," + (allAmoun - allAmoun/100*100)) ;
 	}
 
-	public double getDifferent(double manye) {
-		return (double) (manye * 100 - allAmoun) / 100;
+	public String getDifferent(int manye) {
+		int result = manye * 100 - allAmoun;
+		return (result/100 +"," + (result - result/100*100)) ;
 
 	}
 

@@ -12,63 +12,42 @@ import by.bylinay.trening.categorizedItems.Item;
 import by.bylinay.trening.categorizedItems.SimpleItem;
 
 public class ItemBalancer {
-	Map<Integer, TransactionValue> totalValues = new HashMap<>();
-	
+
 	public Map<Category, Priority> getPriorities(Map<Category, Integer> targets, List<Item> items) {
-		
-		for (Item item : items) {
-			int categoryId = item.getCategoryId();
-			TransactionValue itemValue = new TransactionValue(item.getManeyInСents());
-			TransactionValue totalValue = totalValues.get(categoryId);
-			if (totalValue == null) {
-				totalValue = new TransactionValue(itemValue);
-			} else {
-				totalValue.add(itemValue);
-			}
-			totalValues.put(categoryId, totalValue);
-			
-			
-		}
 		int i = 0;
 		Map<Category, Priority> priorities = new HashMap<>();
 		for (Entry<Category, Integer> target : targets.entrySet()) {
 			i++;
 			Category category = target.getKey();
-			TransactionValue totalValue = totalValues.get(category.getId());
+			TransactionValue totalValue = getTotalValues(items).get(category.getId());
 			Priority priority = null;
 			Double percentage = null;
-		
 			if (totalValue == null) {
-				
-				
-				 percentage = 0.0;
+				percentage = 0.0;
 				int amount = 0;
 				priority = new Priority(percentage, amount);
-				System.out.println("/" + category.getName());
-				System.out.println("/" + priority.getPersent());
-				System.out.println("/" + priority.getAmountMany());
-				System.out.println("/" + priority.getDifferent(target.getValue()));
-			
+				// System.out.println("/" + category.getName());
+				// System.out.println("/" + priority.getPersent());
+				// System.out.println("/" + priority.getAmountMany());
+				// System.out.println("/" + priority.getDifferent(target.getValue()));
+
 			} else {
 				percentage = getRatio(totalValue.getAmount(), target.getValue());
-			    priority = new Priority(percentage, totalValue.getAmount());
-			    System.out.println(i);
+				priority = new Priority(percentage, totalValue.getAmount());
+				System.out.println(i);
 				System.out.println(category.getName());
 				System.out.println(priority.getPersent());
-				System.out.println(percentage);
 				System.out.println(priority.getAmountMany());
-				System.out.println( priority.getDifferent(target.getValue()));
+				System.out.println(priority.getDifferent(target.getValue()));
 				System.out.println("||||||");
-				
 			}
 			priorities.put(category, priority);
 		}
-
 		return priorities;
 	}
-	
-	
-	private Map<Integer, TransactionValue> nm(List<Item> items){
+
+	private Map<Integer, TransactionValue> getTotalValues(List<Item> items) {
+		Map<Integer, TransactionValue> totalValues = new HashMap<>();
 		for (Item item : items) {
 			int categoryId = item.getCategoryId();
 			TransactionValue itemValue = new TransactionValue(item.getManeyInСents());
@@ -81,23 +60,21 @@ public class ItemBalancer {
 			totalValues.put(categoryId, totalValue);
 		}
 		return totalValues;
-		
+
 	}
-	
-	
-	
+
 	private Double getRatio(int value, int target) {
 		double result = 0;
 		if (target == 0.0) {
-			result = value ;
+			result = value;
 		} else {
 			result = (double) value / target;
 		}
 		return result;
-
-		
 	}
 
+	
+	
 	public static void main(String[] args) {
 
 		ItemBalancer balancer = new ItemBalancer();
@@ -108,14 +85,14 @@ public class ItemBalancer {
 		Category categoryP = new CategoryImpl(5, "P", 1);
 
 		Item item = new SimpleItem(1, "yu", 3, new BigDecimal(8));
-		Item item1 = new SimpleItem(2, "yu2", 1, new BigDecimal(2));
+		Item item1 = new SimpleItem(2, "yu2", 1, new BigDecimal(5));
 		Item item2 = new SimpleItem(3, "yu3", 4, new BigDecimal(9));
 
 		Item item4 = new SimpleItem(4, "my", 3, new BigDecimal(7.1));
-		Item item5 = new SimpleItem(5, "my2", 1,new BigDecimal (5));
-		Item item6 = new SimpleItem(6, "my3", 4, new BigDecimal (4));
-		Item item7 = new SimpleItem(7, "my4", 2, new BigDecimal (6));
-		Item item8 = new SimpleItem(8, "my5", 5, new BigDecimal (1));
+		Item item5 = new SimpleItem(5, "my2", 1, new BigDecimal(2));
+		Item item6 = new SimpleItem(6, "my3", 4, new BigDecimal(4));
+		Item item7 = new SimpleItem(7, "my4", 2, new BigDecimal(6));
+		Item item8 = new SimpleItem(8, "my5", 5, new BigDecimal(1));
 		Item item9 = new SimpleItem(0, "u", 4, new BigDecimal(1));
 
 		Map<Category, Integer> rules = new HashMap<>();
@@ -146,11 +123,10 @@ public class ItemBalancer {
 		items2.add(item8);
 		items2.add(item1);
 		items2.add(item1);
-
-	
+		items2.add(item9);
 		balancer.getPriorities(rulesNew, items2);
-		System.out.println("manowar");
-		balancer.getPriorities(rules, items);
+		
+		 balancer.getPriorities(rules, items);
 
 	}
 

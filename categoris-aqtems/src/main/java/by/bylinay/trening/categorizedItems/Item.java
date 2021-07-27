@@ -9,7 +9,6 @@ public interface Item extends  Entity {
 	public int getCategoryId();
 	public Category getCategory();
 	public BigDecimal  getTransactionValue();
-	public void setTransactionValue(double money);
 	public int  getManeyInСents();
 
 }

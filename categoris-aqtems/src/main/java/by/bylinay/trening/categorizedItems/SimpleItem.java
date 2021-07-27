@@ -105,12 +105,6 @@ public class SimpleItem  implements Item {
 	
 	}
 
-	@Override
-	public void setTransactionValue(double money) {
-		
-		
-	}
-	
 
 
 
